@@ -1,0 +1,226 @@
+﻿---
+name: tiecode-tlang
+description: Write, refactor, review, and repair Tiecode `.t` 结绳代码 with strict syntax-first guidance. Use when tasks mention `.t` files, Tiecode/结绳 language grammar, annotations, OOP wrappers, embedded Java blocks (`code` or `@code/@end`), event-driven component patterns, naming/style normalization, compile-error repair, project conventions (`源代码` and `绳包`), layout annotation patterns, object reference semantics (`本对象` and `父对象`), and annotation-based dependency/resource loading.
+---
+
+# Tiecode T-Lang
+
+## Objective
+
+Generate and edit `.t` code that is syntactically valid first, style-consistent second, and API-complete third.
+Prefer grammar and template correctness over broad API enumeration.
+
+## Absolute Rules (Load First)
+
+- Agent Redline (Highest Priority):
+  - If Agent is available and the user has not explicitly forbidden Agent, Agent participation is mandatory.
+  - Agent must cover all three phases: document scan, project understanding, and generated-code review.
+  - This rule has higher priority than optimization/convenience rules; do not skip Agent phases.
+- Android Runtime Redline (Highest Priority):
+  - Target runtime is Android (ART), not Java SE/JRE.
+  - Before generating/importing/calling any Java API, verify Android availability first.
+  - Availability evidence must come from at least one source: existing project/`绳包` code, Android/AndroidX API import path, or declared dependency.
+  - Do not generate unverified or Java-SE-only APIs (for example `java.awt.*`, `javax.swing.*`, `java.applet.*`).
+- Skill Scope Redline (Highest):
+  - Always resolve docs from the currently loaded skill root, not from random workspace folders.
+  - Global Skill Mode: if loaded path is under `~/.codex/skills/` or `~/.trae-cn/skills/`, read docs only from `<active-skill-root>/references/`; do not scan `<workspace>/skills/**` for docs.
+  - Project Skill Mode: if loaded path is under `<workspace>/skills/`, read docs only from that project skill's `references/`.
+  - Cross-skill/workspace doc scanning is forbidden unless user explicitly asks.
+- Doc Path Rule (Preferred):
+  - If Python is available, run `python <active-skill-root>/scrpits/list_doc_absolute_paths.py` first.
+  - Use the script output absolute paths as the primary doc loading paths.
+  - If Python is unavailable, fall back to the original relative paths in this file's Mandatory Read Set.
+- Full-Read Rule (Strict): before any coding, read the full Mandatory Read Set in this file (covers all active docs/json/schema/indexes). Skipping is not allowed.
+- Formatting Redline (Highest): do not introduce unintended spaces in layout blocks or UI literals. Examples: use `猜正面` (not `猜 正面`), `总次数:0|胜利:0|失败:0` (no auto-added separator spaces unless user asks).
+- Layout Key Redline: use canonical Chinese layout keys only (`高度`, not `height`; `宽度`, not `width`).
+- Zero Rule +1: read as many relevant references as possible to improve accuracy, and deduplicate findings to avoid repeated scans.
+- Write and edit business code only under `源代码/`; do not write code in any path under `绳包/`.
+- Zero Rule +2: property semantics are mandatory. `属性读 XXX() : 类型` enables `对象.XXX` read access; `属性写 XXX(值 : 类型)` enables `对象.XXX = 值` write access; same-name `属性读/属性写` pairs are allowed.
+- Zero Rule +3: for every `@布局配置([[...]] )` key (such as `宽度/高度`), verify corresponding accessor support exists before using it. Built-in structural keys `父布局/根布局` are allowed without basic-library member lookup. Treat non-built-in layout keys as property accessors, never as undocumented magic fields.
+- Zero Rule +4: methods annotated as layout properties (for example `@布局属性` methods such as `位于某组件之下`) are also valid layout keys in `@布局配置`; verify annotation and callable signature from source/index before use.
+- Zero Rule +5: `@布局属性` method signatures are fixed to two parameters only: `(欲设置组件 : 可视化组件, 参数值 : 类型)`; do not generate extra parameters.
+- Zero Rule +6: when using a layout-property method in `@布局配置`, the key must be prefixed with `@` (for example `@位于某组件之下=1`).
+- Zero Rule +7: for multi-component layout declaration blocks, keep exactly one blank line after class declaration before the first layout pair, then keep declarations contiguous: no blank line between each `@布局配置` + `变量` pair. After the layout block ends, trailing blank lines are not constrained by this rule.
+- Zero Rule +8: layout values are not numeric-only. `@布局配置` supports typed values (number/text/bool/etc.) as long as type matches the target property or `@布局属性` method second parameter. Example keys: `内容="猜硬币游戏"`, `字体大小=24`, `@位于布局中间=真`.
+- Zero Rule +9（第0标识）: inheritance-chain analysis is mandatory for all classes and objects (not only `窗口` classes). Before emitting member calls/parameter passing, determine current type, parent chain, and whether upcast is valid.
+- Zero Rule +10: in classes inheriting `窗口` (including indirect inheritance), `本对象` is already Android `Context` (`安卓环境`). Pass `本对象` directly when APIs need `安卓环境`.
+- Zero Rule +11: in `窗口` inheritance classes, do not generate `本对象.取安卓环境()`; only use `取安卓环境()` when the current object is not already `安卓环境` and conversion is actually needed.
+- Zero Rule +12: logical-symbol discipline is mandatory. In conditions, `=` is assignment only; comparisons must use `==` / `!=`. Reject patterns like `如果 硬币结果 = 0 则`.
+- Zero Rule +13: color values in `@布局配置` (for example `背景颜色`) must use signed decimal integers, not hex literals (`0x...`/`0X...`). Example: `0xfff5f5f5 -> -657931`, `0xff2c3e50 -> -13877680`.
+- Zero Rule +14: inside a multi-component layout declaration block, no blank line is allowed between consecutive layout definitions (`@布局配置` + `变量` pairs). Keep pairs strictly contiguous.
+- Zero Rule +15: object variables are auto-created by typed declaration. Use `变量 对象名 : 类型` directly; do not generate `变量 对象名 : 类型 = 创建 类型()`.
+- Zero Rule +16: keyword `创建` is internal-only and must not be emitted in business/source code generation.
+- Zero Rule +17: multi-branch condition syntax uses `否则 条件` (without `否则如果`). Do not generate `否则如果`.
+- Zero Rule +18: conditional-loop syntax must use parentheses: `循环(条件)`; do not generate `循环 条件`.
+- Zero Rule +19: function-call signatures are strict. Verify parameter count/types against existing definitions; do not invent overloads (for example forbid `到小数(文本)` when only zero-arg `到小数()` exists).
+- Zero Rule +20: function-call form is strict. Instance methods must be called by instance receiver (`对象.方法(...)`); static methods must be called by type/class receiver (`类型.方法(...)`). Forbid global-call misuse such as `到文本(变量名)` when correct form is `变量名.到文本()`.
+- Do not generate `包名 ...` by default.
+- Main window must be `类 启动窗口 : 窗口`.
+- Page classes must inherit `窗口` (do not use `组件容器` as page base class).
+- Prefer annotation-driven layout (`@布局配置`) with parent-child declaration order.
+- If no embedded Java (`code` / `@code...@end`) is used, do not add `@导入Java`.
+- Zero Rule: before adding constructor boilerplate, check whether the class already defines it; if already defined, do not duplicate; if missing and required, add exactly one constructor boilerplate block.
+- Top Rule: before calling any function, search `源代码/` and `绳包/` to confirm it exists, then verify whether it is instance or static and use the correct call form.
+- Treat all unverified functions as unavailable; there are no undocumented built-in functions（不存在任何未公开内置函数）.
+- Do not start coding after reading only a few files; complete the mandatory read set first and report what was read.
+- Use `@code` only when 结绳语句 cannot express the logic.
+
+## Execution Workflow
+
+1. Detect target domain from file path and surrounding existing code style (`结绳.JVM`, `结绳.安卓`, `结绳.Meng`, `结绳.基本`) and whether the task is syntax generation or syntax profiling.
+2. Determine current skill mode first (Global Skill Mode vs Project Skill Mode) and lock doc root to active skill `references/` only.
+3. Before writing code, read the full mandatory set (all listed `references/` docs + required project files). If Agent is available and not forbidden by user, run Agent to review docs and project and deduplicate evidence. If Java API is involved, complete Android-availability check before writing imports/calls.
+4. Select nearest template and instantiate with minimal edits in `源代码/`.
+5. Add annotations and embedded Java only when necessary.
+6. Run post-generation checklist and fix violations.
+7. If Agent is available and not forbidden by user, run Agent review on generated code and apply required fixes.
+
+## Absolute Path Discovery (Preferred)
+
+- Script path: `scrpits/list_doc_absolute_paths.py`
+- Command:
+  - `python <active-skill-root>/scrpits/list_doc_absolute_paths.py`
+  - Optional: `python <active-skill-root>/scrpits/list_doc_absolute_paths.py --workspace-root <workspace-root>`
+- Output usage:
+  - Read docs by the emitted absolute paths first.
+  - Keep skill scope locked to the active skill root.
+- No-Python fallback:
+  - Use the original relative paths in Mandatory Read Set (unchanged fallback behavior).
+
+## Mandatory Read Set (Must Load Before Coding)
+
+Always load these before writing test pages or production code (paths are relative to the active skill root; this list is authoritative; do not rely on `references/README.md`):
+
+- `references/overview.md`
+- `references/grammar-ebnf.md`
+- `references/grammar-strict.schema.json`
+- `references/grammar-strict-example.json`
+- `references/declaration-patterns.md`
+- `references/control-flow-async.md`
+- `references/oop-annotations.md`
+- `references/embedded-java.md`
+- `references/template-recipes.md`
+- `references/naming-style.md`
+- `references/error-fix-rules.md`
+- `references/ai-generation-checklist.md`
+- `references/syntax-feature-matrix.md`
+- `references/evidence-index.md`
+- `references/project-conventions.md`
+- `references/indexes/t_lang_annotation_index_v2.json`
+- `references/indexes/t_lang_api_index.json`
+- `references/indexes/t_lang_manifest.json`
+- `references/indexes/t_lang_manifest_v2.json`
+- `references/indexes/t_lang_structured_members.json`
+- Project source structure and peer code under `源代码/**/*.t` (read nearby same-domain files first).
+- 必读 `绳包/安卓基本库/源代码/安卓_可视化组件.t` 用于组件能力确认（只读检索）。
+- Use files under `绳包/**/源代码/*.t` only for lookup/verification (for example `绳包/安卓基本库/源代码/安卓_可视化组件.t`), not as write targets.
+- Verify property read/write support in the above files before emitting property access or non-built-in layout keys.
+- For every layout key, verify it maps to either a property accessor (`属性读/属性写`) or a `@布局属性` method; built-in structural keys `父布局/根布局` are exempt from this lookup.
+- For every `@布局属性` method used as layout key, verify two-parameter signature and `@key=value` usage form.
+- For every layout key-value pair, verify value type compatibility (for example `内容` uses text, `字体大小` uses number, `@位于布局中间` uses bool).
+- Inheritance-chain analysis is mandatory before generation: resolve current class/object parent chain first, then decide member access and parameter passing.
+- In classes inheriting `窗口`, treat `本对象` as `安卓环境` directly and forbid `本对象.取安卓环境()` generation.
+- In conditions, use `==` / `!=` for comparison and reserve `=` for assignment/default values only.
+- For layout color keys (for example `背景颜色`), use signed decimal integer literals only; do not use `0x...`/`0X...`.
+- In layout declaration blocks, keep `@布局配置` definitions contiguous with no blank lines between adjacent definition pairs.
+- For object instance declaration, use auto-creation form `变量 名称 : 类型`; forbid `= 创建 类型()` generation.
+- In multi-branch conditions, use `否则 条件` syntax; do not emit `否则如果`.
+- Use `循环(条件)` for conditional loops.
+- Validate call arity/type against real function signatures before generation.
+- Validate call kind and receiver form before generation: instance method -> `对象.方法(...)`, static method -> `类型.方法(...)`; forbid `到文本(变量名)`-style global misuse.
+- For any Java API/class used in `@导入Java` or embedded Java, verify Android availability first; do not use Java-SE-only APIs.
+- If Agent is available and not forbidden by user, Agent must participate in all three phases: document scan, project understanding, and generated-code review.
+
+Execution gate:
+- Do not start from only 2-3 files.
+- Before code output, print a full "已读取文件清单" that covers every file in this mandatory set.
+- If Agent is available and user has not forbidden Agent, do not bypass mandatory Agent phases.
+
+## Reference Loading Map
+
+After the mandatory set is loaded, load request-specific references:
+
+- Grammar and declarations:
+  - `references/grammar-ebnf.md`
+  - `references/grammar-strict.schema.json`
+  - `references/grammar-strict-example.json`
+  - `references/declaration-patterns.md`
+- Control flow or async/thread logic:
+  - `references/control-flow-async.md`
+- OOP, generic, operator, annotation semantics:
+  - `references/oop-annotations.md`
+- Embedded Java bridging:
+  - `references/embedded-java.md`
+- Fast scaffold generation:
+  - `references/template-recipes.md`
+- Naming/style normalization:
+  - `references/naming-style.md`
+- Repair pass:
+  - `references/error-fix-rules.md`
+  - `references/ai-generation-checklist.md`
+- Project conventions and dependency/resource annotations:
+  - `references/project-conventions.md`
+
+## Hard Constraints
+
+- Close every opened block (`结束 类/方法/属性/事件/循环/如果/假如`).
+- Keep return-style consistent per file (`:` or `为`).
+- Keep parameter typing explicit; default values at the tail.
+- Use `@运算符重载` for operator methods.
+- Keep `@code` and `@end` paired.
+- Use `#参数名` / `#this` macros in Java-embedded code.
+- Use `==` / `!=` (not `=`) in condition comparisons.
+- Treat Android API compatibility as highest-priority gating for all Java API imports/calls.
+- Do not bypass the highest-priority Agent rule unless user explicitly forbids Agent.
+- Do not invent unseen annotation names unless explicitly requested.
+
+## Built-In Navigation (Migrated From README)
+
+Core navigation:
+
+- `references/grammar-ebnf.md`: 核心语法骨架（声明/块/参数/返回/表达式入口）
+- `references/grammar-strict.schema.json`: 严格 JSON Schema（校验结绳 AST 结构）
+- `references/grammar-strict-example.json`: 严格 Schema 最小合法示例
+- `references/declaration-patterns.md`: 类、方法、属性、事件、变量、常量声明模板
+- `references/control-flow-async.md`: `如果/否则`、`循环`、`假如/是`、容错、线程语法
+- `references/oop-annotations.md`: OOP 规则、泛型、运算符重载、注解语义
+- `references/embedded-java.md`: `code` 与 `@code/@end` 的嵌入规则与约束
+- `references/template-recipes.md`: 可直接复用的场景模板（组件、适配器、工具类等）
+- `references/naming-style.md`: 命名、编码风格、组织规范
+- `references/error-fix-rules.md`: 高频错误与自动修复规则
+- `references/ai-generation-checklist.md`: 生成前后检查单（硬约束）
+- `references/syntax-feature-matrix.md`: 语法特性矩阵（是否必需、典型坑）
+- `references/evidence-index.md`: 语法证据（源码路径+行号）
+- `references/project-conventions.md`: 项目约定（源代码/绳包、注解引入依赖、布局模式、本对象/父对象）
+
+Recommended reading order:
+
+1. `references/grammar-ebnf.md` + `references/declaration-patterns.md`
+2. `references/oop-annotations.md`
+3. `references/embedded-java.md`
+4. `references/template-recipes.md` + `references/naming-style.md`
+5. `references/ai-generation-checklist.md` + `references/error-fix-rules.md`
+
+Corpus summary:
+
+- 源文件总数：50 (`源代码/**/*.t`)
+- 统计摘要：类 368、方法 1856、属性读 540、属性写 467、常量 552、事件定义 167
+- 证据索引：`references/evidence-index.md`
+- 机器索引：`references/indexes/t_lang_api_index.json`, `references/indexes/t_lang_structured_members.json`
+
+## Authoring Strategy
+
+- Start from smallest compilable skeleton.
+- Add properties/events/overrides incrementally.
+- Prefer 结绳语句 for simple logic.
+- Switch to `@code` for complex Java control/anonymous class/override logic.
+- Maintain local style of adjacent `.t` files.
+
+## Deliverable Format
+
+When producing code for users:
+
+1. Output final `.t` code first.
+2. Briefly list syntax-critical decisions (annotation, return style, block closure).
+3. Mention unresolved assumptions explicitly.
+

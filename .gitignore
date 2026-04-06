@@ -1,0 +1,8 @@
+﻿# Archives
+*.zip
+
+# Local tool/workspace dirs
+.trae/
+.codex/
+.vscode/
+.idea/

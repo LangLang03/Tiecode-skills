@@ -1,0 +1,583 @@
+﻿{
+    "spec":  "Tiecode .t AI Spec",
+    "generated_at":  "2026-04-06T19:08:52+08:00",
+    "root":  "C:\\Users\\Administrator\\Documents\\Tiecode-AndroidLib-master",
+    "coverage":  {
+                     "file_count":  50,
+                     "files":  [
+                                   "C:\\Users\\Administrator\\Documents\\Tiecode-AndroidLib-master\\源代码\\AndroidX\\AndroidX_布局.t",
+                                   "C:\\Users\\Administrator\\Documents\\Tiecode-AndroidLib-master\\源代码\\AndroidX\\AndroidX_常用常量定义.t",
+                                   "C:\\Users\\Administrator\\Documents\\Tiecode-AndroidLib-master\\源代码\\AndroidX\\AndroidX_窗口.t",
+                                   "C:\\Users\\Administrator\\Documents\\Tiecode-AndroidLib-master\\源代码\\AndroidX\\AndroidX_组件.t",
+                                   "C:\\Users\\Administrator\\Documents\\Tiecode-AndroidLib-master\\源代码\\AndroidX\\弹性布局.t",
+                                   "C:\\Users\\Administrator\\Documents\\Tiecode-AndroidLib-master\\源代码\\AndroidX\\高级列表框.t",
+                                   "C:\\Users\\Administrator\\Documents\\Tiecode-AndroidLib-master\\源代码\\AndroidX\\高级列表框_布局管理器.t",
+                                   "C:\\Users\\Administrator\\Documents\\Tiecode-AndroidLib-master\\源代码\\AndroidX\\高级列表框_分割装饰线.t",
+                                   "C:\\Users\\Administrator\\Documents\\Tiecode-AndroidLib-master\\源代码\\JVM_ZIP相关.t",
+                                   "C:\\Users\\Administrator\\Documents\\Tiecode-AndroidLib-master\\源代码\\JVM_多线程相关.t",
+                                   "C:\\Users\\Administrator\\Documents\\Tiecode-AndroidLib-master\\源代码\\JVM_反射相关.t",
+                                   "C:\\Users\\Administrator\\Documents\\Tiecode-AndroidLib-master\\源代码\\JVM_工具类.t",
+                                   "C:\\Users\\Administrator\\Documents\\Tiecode-AndroidLib-master\\源代码\\JVM_基本数据结构.t",
+                                   "C:\\Users\\Administrator\\Documents\\Tiecode-AndroidLib-master\\源代码\\JVM_基础类型.t",
+                                   "C:\\Users\\Administrator\\Documents\\Tiecode-AndroidLib-master\\源代码\\JVM_控制台相关.t",
+                                   "C:\\Users\\Administrator\\Documents\\Tiecode-AndroidLib-master\\源代码\\JVM_输入输出流.t",
+                                   "C:\\Users\\Administrator\\Documents\\Tiecode-AndroidLib-master\\源代码\\JVM_数学相关.t",
+                                   "C:\\Users\\Administrator\\Documents\\Tiecode-AndroidLib-master\\源代码\\JVM_数组或集合排序工具.t",
+                                   "C:\\Users\\Administrator\\Documents\\Tiecode-AndroidLib-master\\源代码\\JVM_网络相关.t",
+                                   "C:\\Users\\Administrator\\Documents\\Tiecode-AndroidLib-master\\源代码\\JVM_正则.t",
+                                   "C:\\Users\\Administrator\\Documents\\Tiecode-AndroidLib-master\\源代码\\安卓_布局组件.t",
+                                   "C:\\Users\\Administrator\\Documents\\Tiecode-AndroidLib-master\\源代码\\安卓_常用常量定义.t",
+                                   "C:\\Users\\Administrator\\Documents\\Tiecode-AndroidLib-master\\源代码\\安卓_程序组件.t",
+                                   "C:\\Users\\Administrator\\Documents\\Tiecode-AndroidLib-master\\源代码\\安卓_传感器类.t",
+                                   "C:\\Users\\Administrator\\Documents\\Tiecode-AndroidLib-master\\源代码\\安卓_对话框.t",
+                                   "C:\\Users\\Administrator\\Documents\\Tiecode-AndroidLib-master\\源代码\\安卓_辅助类.t",
+                                   "C:\\Users\\Administrator\\Documents\\Tiecode-AndroidLib-master\\源代码\\安卓_画板.t",
+                                   "C:\\Users\\Administrator\\Documents\\Tiecode-AndroidLib-master\\源代码\\安卓_基本类型.t",
+                                   "C:\\Users\\Administrator\\Documents\\Tiecode-AndroidLib-master\\源代码\\安卓_可操控组件.t",
+                                   "C:\\Users\\Administrator\\Documents\\Tiecode-AndroidLib-master\\源代码\\安卓_可扩展文本.t",
+                                   "C:\\Users\\Administrator\\Documents\\Tiecode-AndroidLib-master\\源代码\\安卓_可视化组件.t",
+                                   "C:\\Users\\Administrator\\Documents\\Tiecode-AndroidLib-master\\源代码\\安卓_可视化组件_动画.t",
+                                   "C:\\Users\\Administrator\\Documents\\Tiecode-AndroidLib-master\\源代码\\安卓_可视化组件2.t",
+                                   "C:\\Users\\Administrator\\Documents\\Tiecode-AndroidLib-master\\源代码\\安卓_设备相关.t",
+                                   "C:\\Users\\Administrator\\Documents\\Tiecode-AndroidLib-master\\源代码\\安卓_适配器类组件.t",
+                                   "C:\\Users\\Administrator\\Documents\\Tiecode-AndroidLib-master\\源代码\\安卓_数据库.t",
+                                   "C:\\Users\\Administrator\\Documents\\Tiecode-AndroidLib-master\\源代码\\安卓_图像类.t",
+                                   "C:\\Users\\Administrator\\Documents\\Tiecode-AndroidLib-master\\源代码\\安卓_网络相关.t",
+                                   "C:\\Users\\Administrator\\Documents\\Tiecode-AndroidLib-master\\源代码\\安卓_无障碍.t",
+                                   "C:\\Users\\Administrator\\Documents\\Tiecode-AndroidLib-master\\源代码\\安卓_悬浮窗.t",
+                                   "C:\\Users\\Administrator\\Documents\\Tiecode-AndroidLib-master\\源代码\\安卓_应用程序包相关.t",
+                                   "C:\\Users\\Administrator\\Documents\\Tiecode-AndroidLib-master\\源代码\\安卓_应用基础类.t",
+                                   "C:\\Users\\Administrator\\Documents\\Tiecode-AndroidLib-master\\源代码\\安卓_杂类文件.t",
+                                   "C:\\Users\\Administrator\\Documents\\Tiecode-AndroidLib-master\\源代码\\安卓_资源.t",
+                                   "C:\\Users\\Administrator\\Documents\\Tiecode-AndroidLib-master\\源代码\\安卓_组件事件.t",
+                                   "C:\\Users\\Administrator\\Documents\\Tiecode-AndroidLib-master\\源代码\\结绳_工具类.t",
+                                   "C:\\Users\\Administrator\\Documents\\Tiecode-AndroidLib-master\\源代码\\结绳_工具类_数据操作.t",
+                                   "C:\\Users\\Administrator\\Documents\\Tiecode-AndroidLib-master\\源代码\\结绳_工具类2.t",
+                                   "C:\\Users\\Administrator\\Documents\\Tiecode-AndroidLib-master\\源代码\\结绳_数据格式支持.t",
+                                   "C:\\Users\\Administrator\\Documents\\Tiecode-AndroidLib-master\\源代码\\结绳_用户软件相关.t"
+                               ]
+                 },
+    "counts":  {
+                   "files":  50,
+                   "classes":  368,
+                   "methods":  1856,
+                   "prop_reads":  540,
+                   "prop_writes":  467,
+                   "constants":  552,
+                   "events":  167,
+                   "annotations_total":  4748,
+                   "unique_annotations":  57,
+                   "operators":  86,
+                   "java_imports_unique":  191,
+                   "external_deps_unique":  21
+               },
+    "package_distribution":  {
+                                 "结绳.安卓":  33,
+                                 "结绳.Meng":  4,
+                                 "结绳.JVM":  11,
+                                 "结绳.基本":  1
+                             },
+    "grammar_markers":  {
+                            "class":  "类",
+                            "constant":  "常量",
+                            "define_event":  "定义事件",
+                            "method":  "方法",
+                            "variable":  "变量",
+                            "block_end":  "结束",
+                            "block_code_start":  "@code",
+                            "inline_code":  "code",
+                            "prop_write":  "属性写",
+                            "package":  "包名",
+                            "event_impl":  "事件",
+                            "prop_read":  "属性读",
+                            "block_code_end":  "@end"
+                        },
+    "annotations":  [
+                        {
+                            "name":  "静态",
+                            "count":  1086
+                        },
+                        {
+                            "name":  "code",
+                            "count":  977
+                        },
+                        {
+                            "name":  "end",
+                            "count":  977
+                        },
+                        {
+                            "name":  "导入Java",
+                            "count":  448
+                        },
+                        {
+                            "name":  "Override",
+                            "count":  282
+                        },
+                        {
+                            "name":  "指代类",
+                            "count":  158
+                        },
+                        {
+                            "name":  "运算符重载",
+                            "count":  146
+                        },
+                        {
+                            "name":  "禁止创建对象",
+                            "count":  107
+                        },
+                        {
+                            "name":  "嵌入式代码",
+                            "count":  71
+                        },
+                        {
+                            "name":  "布局属性",
+                            "count":  57
+                        },
+                        {
+                            "name":  "附加权限",
+                            "count":  56
+                        },
+                        {
+                            "name":  "废弃使用",
+                            "count":  45
+                        },
+                        {
+                            "name":  "隐藏",
+                            "count":  42
+                        },
+                        {
+                            "name":  "虚拟事件",
+                            "count":  40
+                        },
+                        {
+                            "name":  "全局类",
+                            "count":  36
+                        },
+                        {
+                            "name":  "外部依赖库",
+                            "count":  33
+                        },
+                        {
+                            "name":  "常量类型",
+                            "count":  23
+                        },
+                        {
+                            "name":  "需求值类型",
+                            "count":  23
+                        },
+                        {
+                            "name":  "禁止继承",
+                            "count":  17
+                        },
+                        {
+                            "name":  "异步方法",
+                            "count":  17
+                        },
+                        {
+                            "name":  "外部Java文件",
+                            "count":  16
+                        },
+                        {
+                            "name":  "虚拟方法",
+                            "count":  15
+                        },
+                        {
+                            "name":  "后缀代码",
+                            "count":  14
+                        },
+                        {
+                            "name":  "前缀代码",
+                            "count":  7
+                        },
+                        {
+                            "name":  "值输出规则",
+                            "count":  6
+                        },
+                        {
+                            "name":  "编译时处理参数",
+                            "count":  6
+                        },
+                        {
+                            "name":  "匹配文件",
+                            "count":  4
+                        },
+                        {
+                            "name":  "附加清单.全局属性",
+                            "count":  4
+                        },
+                        {
+                            "name":  "输出名",
+                            "count":  3
+                        },
+                        {
+                            "name":  "调试",
+                            "count":  3
+                        },
+                        {
+                            "name":  "自动订阅事件",
+                            "count":  2
+                        },
+                        {
+                            "name":  "附加清单",
+                            "count":  2
+                        },
+                        {
+                            "name":  "属性需求.支持项目单击",
+                            "count":  1
+                        },
+                        {
+                            "name":  "属性需求.支持项目长按",
+                            "count":  1
+                        },
+                        {
+                            "name":  "属性需求.固定项目ID",
+                            "count":  1
+                        },
+                        {
+                            "name":  "全局基础类",
+                            "count":  1
+                        },
+                        {
+                            "name":  "属性需求.支持单击",
+                            "count":  1
+                        },
+                        {
+                            "name":  "属性需求.支持长按",
+                            "count":  1
+                        },
+                        {
+                            "name":  "属性需求.支持触摸",
+                            "count":  1
+                        },
+                        {
+                            "name":  "属性需求.支持拖放",
+                            "count":  1
+                        },
+                        {
+                            "name":  "属性需求.支持焦点改变监听",
+                            "count":  1
+                        },
+                        {
+                            "name":  "属性需求.支持按键监听",
+                            "count":  1
+                        },
+                        {
+                            "name":  "属性需求.支持内容改变监听",
+                            "count":  1
+                        },
+                        {
+                            "name":  "附加清单.组件属性",
+                            "count":  1
+                        },
+                        {
+                            "name":  "JavascriptInterface",
+                            "count":  1
+                        },
+                        {
+                            "name":  "SuppressLint",
+                            "count":  1
+                        },
+                        {
+                            "name":  "TargetApi",
+                            "count":  1
+                        },
+                        {
+                            "name":  "Override protected void attachBaseContext",
+                            "count":  1
+                        },
+                        {
+                            "name":  "Override public void onCreate",
+                            "count":  1
+                        },
+                        {
+                            "name":  "安卓资源.XML",
+                            "count":  1
+                        },
+                        {
+                            "name":  "作者",
+                            "count":  1
+                        },
+                        {
+                            "name":  "软件配置.软件名称",
+                            "count":  1
+                        },
+                        {
+                            "name":  "软件配置.软件图标",
+                            "count":  1
+                        },
+                        {
+                            "name":  "软件配置.版本号",
+                            "count":  1
+                        },
+                        {
+                            "name":  "软件配置.版本名称",
+                            "count":  1
+                        },
+                        {
+                            "name":  "软件配置.最低安卓版本",
+                            "count":  1
+                        },
+                        {
+                            "name":  "软件配置.目标安卓版本",
+                            "count":  1
+                        }
+                    ],
+    "return_type_top":  [
+                            {
+                                "type":  "逻辑型",
+                                "count":  257
+                            },
+                            {
+                                "type":  "整数",
+                                "count":  245
+                            },
+                            {
+                                "type":  "文本",
+                                "count":  176
+                            },
+                            {
+                                "type":  "为 整数",
+                                "count":  87
+                            },
+                            {
+                                "type":  "为 逻辑型",
+                                "count":  81
+                            },
+                            {
+                                "type":  "为 文本",
+                                "count":  75
+                            },
+                            {
+                                "type":  "长整数",
+                                "count":  46
+                            },
+                            {
+                                "type":  "为 小数",
+                                "count":  41
+                            },
+                            {
+                                "type":  "对象",
+                                "count":  33
+                            },
+                            {
+                                "type":  "小数",
+                                "count":  25
+                            },
+                            {
+                                "type":  "文本构建器",
+                                "count":  25
+                            },
+                            {
+                                "type":  "单精度小数",
+                                "count":  24
+                            },
+                            {
+                                "type":  "可扩展文本构建器",
+                                "count":  22
+                            },
+                            {
+                                "type":  "为 字节[]",
+                                "count":  19
+                            },
+                            {
+                                "type":  "为 长整数",
+                                "count":  16
+                            },
+                            {
+                                "type":  "位图对象",
+                                "count":  15
+                            },
+                            {
+                                "type":  "Java类",
+                                "count":  12
+                            },
+                            {
+                                "type":  "模板类型1",
+                                "count":  12
+                            },
+                            {
+                                "type":  "文件",
+                                "count":  12
+                            },
+                            {
+                                "type":  "字节[]",
+                                "count":  11
+                            },
+                            {
+                                "type":  "可绘制对象",
+                                "count":  10
+                            },
+                            {
+                                "type":  "Java注解[]",
+                                "count":  10
+                            },
+                            {
+                                "type":  "文本[]",
+                                "count":  10
+                            },
+                            {
+                                "type":  "Java类型[]",
+                                "count":  9
+                            },
+                            {
+                                "type":  "可视化组件",
+                                "count":  8
+                            },
+                            {
+                                "type":  "字符",
+                                "count":  8
+                            },
+                            {
+                                "type":  "大整数",
+                                "count":  8
+                            },
+                            {
+                                "type":  "大数字",
+                                "count":  8
+                            },
+                            {
+                                "type":  "Java类[]",
+                                "count":  7
+                            },
+                            {
+                                "type":  "字节",
+                                "count":  7
+                            }
+                        ],
+    "param_type_top":  [
+                           {
+                               "type":  "整数",
+                               "count":  567
+                           },
+                           {
+                               "type":  "文本",
+                               "count":  394
+                           },
+                           {
+                               "type":  "逻辑型",
+                               "count":  120
+                           },
+                           {
+                               "type":  "单精度小数",
+                               "count":  118
+                           },
+                           {
+                               "type":  "对象",
+                               "count":  87
+                           },
+                           {
+                               "type":  "可视化组件",
+                               "count":  76
+                           },
+                           {
+                               "type":  "小数",
+                               "count":  55
+                           },
+                           {
+                               "type":  "模板类型1",
+                               "count":  35
+                           },
+                           {
+                               "type":  "Java类",
+                               "count":  28
+                           },
+                           {
+                               "type":  "安卓环境",
+                               "count":  27
+                           },
+                           {
+                               "type":  "字节[]",
+                               "count":  25
+                           },
+                           {
+                               "type":  "组件容器",
+                               "count":  24
+                           },
+                           {
+                               "type":  "长整数",
+                               "count":  23
+                           },
+                           {
+                               "type":  "对象[]",
+                               "count":  16
+                           },
+                           {
+                               "type":  "画笔对象",
+                               "count":  16
+                           },
+                           {
+                               "type":  "变体型",
+                               "count":  15
+                           },
+                           {
+                               "type":  "输入流",
+                               "count":  14
+                           },
+                           {
+                               "type":  "输出流",
+                               "count":  14
+                           },
+                           {
+                               "type":  "文本[]",
+                               "count":  13
+                           },
+                           {
+                               "type":  "启动信息",
+                               "count":  12
+                           },
+                           {
+                               "type":  "可绘制对象",
+                               "count":  12
+                           },
+                           {
+                               "type":  "矩形",
+                               "count":  12
+                           },
+                           {
+                               "type":  "整数[]",
+                               "count":  11
+                           },
+                           {
+                               "type":  "图片资源",
+                               "count":  10
+                           },
+                           {
+                               "type":  "构建路径",
+                               "count":  10
+                           },
+                           {
+                               "type":  "位图对象",
+                               "count":  9
+                           },
+                           {
+                               "type":  "文件",
+                               "count":  8
+                           },
+                           {
+                               "type":  "Java类[]",
+                               "count":  8
+                           },
+                           {
+                               "type":  "字符",
+                               "count":  8
+                           },
+                           {
+                               "type":  "大整数",
+                               "count":  8
+                           }
+                       ],
+    "operator_symbols":  [
+                             "-",
+                             "!=",
+                             "*",
+                             "/",
+                             "?",
+                             "[]",
+                             "+",
+                             "=="
+                         ],
+    "api_index_files":  {
+                            "summary":  "docs/t_lang_api_index.json",
+                            "members":  "docs/t_lang_structured_members.json"
+                        }
+}

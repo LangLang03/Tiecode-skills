@@ -1,0 +1,4 @@
+interface:
+  display_name: "Tiecode T-Lang"
+  short_description: "Author and validate Tiecode .t syntax and generation"
+  default_prompt: "Use this skill to write or review Tiecode .t language code with strict grammar, examples, and annotation conventions."

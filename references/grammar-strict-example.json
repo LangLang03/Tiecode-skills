@@ -1,0 +1,53 @@
+﻿{
+  "kind": "file",
+  "imports": [],
+  "classes": [
+    {
+      "kind": "class",
+      "name": "示例类",
+      "genericParams": [],
+      "annotations": [
+        {
+          "kind": "annotation",
+          "name": "全局类",
+          "args": []
+        }
+      ],
+      "members": [
+        {
+          "kind": "method",
+          "name": "取名称",
+          "params": [],
+          "returnType": {
+            "kind": "type",
+            "name": "文本",
+            "genericArgs": [],
+            "arrayDepth": 0,
+            "nullable": false
+          },
+          "annotations": [],
+          "body": {
+            "kind": "body",
+            "mode": "结绳",
+            "segments": [
+              {
+                "kind": "return",
+                "value": {
+                  "kind": "expr",
+                  "text": "\"示例\""
+                }
+              }
+            ]
+          },
+          "blockEnd": "结束 方法"
+        }
+      ],
+      "blockEnd": "结束 类"
+    }
+  ],
+  "metadata": {
+    "filePath": "源代码/示例.t",
+    "lineCount": 12,
+    "returnStyle": ":"
+  }
+}

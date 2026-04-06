@@ -1,0 +1,540 @@
+﻿{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tiecode.local/schemas/jiesheng-t-ast.strict.schema.json",
+  "title": "结绳 .t AST 严格语法 Schema",
+  "description": "用于校验结绳 .t 文件的 AST JSON 结构，不直接校验源码文本。",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["kind", "imports", "classes"],
+  "properties": {
+    "kind": { "const": "file" },
+    "package": {
+      "anyOf": [
+        { "$ref": "#/$defs/packageDecl" },
+        { "type": "null" }
+      ],
+      "description": "可省略。默认不写包名。"
+    },
+    "imports": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/annotation" },
+      "default": []
+    },
+    "classes": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/classDecl" }
+    },
+    "metadata": { "$ref": "#/$defs/metadata" }
+  },
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "pattern": "^[A-Za-z_\\u4E00-\\u9FFF][A-Za-z0-9_\\u4E00-\\u9FFF]*$"
+    },
+    "dottedIdentifier": {
+      "type": "string",
+      "pattern": "^[A-Za-z_\\u4E00-\\u9FFF][A-Za-z0-9_\\u4E00-\\u9FFF]*(\\.[A-Za-z_\\u4E00-\\u9FFF][A-Za-z0-9_\\u4E00-\\u9FFF]*)*$"
+    },
+    "methodName": {
+      "anyOf": [
+        { "$ref": "#/$defs/identifier" },
+        {
+          "enum": ["=", "[]", "[]=", "?", "+", "-", "*", "/", "==", "!="]
+        }
+      ]
+    },
+    "expr": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "text"],
+      "properties": {
+        "kind": { "const": "expr" },
+        "text": { "type": "string", "minLength": 1 }
+      }
+    },
+    "typeRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "name"],
+      "properties": {
+        "kind": { "const": "type" },
+        "name": {
+          "type": "string",
+          "pattern": "^[A-Za-z_\\u4E00-\\u9FFF][A-Za-z0-9_\\u4E00-\\u9FFF.]*$"
+        },
+        "genericArgs": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/typeRef" },
+          "default": []
+        },
+        "arrayDepth": { "type": "integer", "minimum": 0, "maximum": 8, "default": 0 },
+        "nullable": { "type": "boolean", "default": false }
+      }
+    },
+    "annotation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "name"],
+      "properties": {
+        "kind": { "const": "annotation" },
+        "name": {
+          "type": "string",
+          "pattern": "^[A-Za-z_\\u4E00-\\u9FFF][A-Za-z0-9_\\u4E00-\\u9FFF.]*$"
+        },
+        "args": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              { "type": "string" },
+              { "type": "number" },
+              { "type": "boolean" },
+              { "type": "null" }
+            ]
+          },
+          "default": []
+        }
+      }
+    },
+    "param": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "type"],
+      "properties": {
+        "name": { "$ref": "#/$defs/identifier" },
+        "type": { "$ref": "#/$defs/typeRef" },
+        "default": { "$ref": "#/$defs/expr" }
+      }
+    },
+    "packageDecl": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "name"],
+      "properties": {
+        "kind": { "const": "package" },
+        "name": { "$ref": "#/$defs/dottedIdentifier" },
+        "line": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "constDecl": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "name"],
+      "properties": {
+        "kind": { "const": "constant" },
+        "name": { "$ref": "#/$defs/identifier" },
+        "type": { "$ref": "#/$defs/typeRef" },
+        "value": { "$ref": "#/$defs/expr" },
+        "annotations": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/annotation" },
+          "default": []
+        }
+      }
+    },
+    "varDecl": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "name"],
+      "properties": {
+        "kind": { "const": "variable" },
+        "name": { "$ref": "#/$defs/identifier" },
+        "type": { "$ref": "#/$defs/typeRef" },
+        "value": { "$ref": "#/$defs/expr" },
+        "annotations": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/annotation" },
+          "default": []
+        }
+      }
+    },
+    "inlineJava": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "code"],
+      "properties": {
+        "kind": { "const": "inline_java" },
+        "code": { "type": "string", "minLength": 1 }
+      }
+    },
+    "javaBlock": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "code"],
+      "properties": {
+        "kind": { "const": "java_block" },
+        "code": { "type": "string", "minLength": 1 }
+      }
+    },
+    "ifElseIf": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["condition", "body"],
+      "properties": {
+        "condition": { "$ref": "#/$defs/expr" },
+        "body": { "$ref": "#/$defs/statementArray" }
+      }
+    },
+    "switchCase": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["match", "body"],
+      "properties": {
+        "match": { "$ref": "#/$defs/expr" },
+        "body": { "$ref": "#/$defs/statementArray" }
+      }
+    },
+    "loopHeader": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["mode", "condition"],
+          "properties": {
+            "mode": { "const": "condition" },
+            "condition": { "$ref": "#/$defs/expr" }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["mode", "index", "start", "end"],
+          "properties": {
+            "mode": { "const": "count" },
+            "index": { "$ref": "#/$defs/identifier" },
+            "start": { "$ref": "#/$defs/expr" },
+            "end": { "$ref": "#/$defs/expr" }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["mode", "source", "value"],
+          "properties": {
+            "mode": { "const": "foreach" },
+            "source": { "$ref": "#/$defs/expr" },
+            "value": { "$ref": "#/$defs/identifier" }
+          }
+        }
+      ]
+    },
+    "ifStmt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "condition", "then"],
+      "properties": {
+        "kind": { "const": "if" },
+        "condition": { "$ref": "#/$defs/expr" },
+        "then": { "$ref": "#/$defs/statementArray" },
+        "elseIf": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/ifElseIf" },
+          "default": []
+        },
+        "else": { "$ref": "#/$defs/statementArray" }
+      }
+    },
+    "switchStmt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "target", "cases"],
+      "properties": {
+        "kind": { "const": "switch" },
+        "target": { "$ref": "#/$defs/expr" },
+        "cases": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/switchCase" }
+        },
+        "default": { "$ref": "#/$defs/statementArray" }
+      }
+    },
+    "loopStmt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "header", "body"],
+      "properties": {
+        "kind": { "const": "loop" },
+        "header": { "$ref": "#/$defs/loopHeader" },
+        "body": { "$ref": "#/$defs/statementArray" }
+      }
+    },
+    "returnStmt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind"],
+      "properties": {
+        "kind": { "const": "return" },
+        "value": { "$ref": "#/$defs/expr" }
+      }
+    },
+    "tryStmt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "body"],
+      "properties": {
+        "kind": { "const": "try" },
+        "body": { "$ref": "#/$defs/statementArray" },
+        "catchAll": { "type": "boolean", "default": true },
+        "afterCatch": { "$ref": "#/$defs/statementArray" }
+      }
+    },
+    "threadStmt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "background"],
+      "properties": {
+        "kind": { "const": "thread" },
+        "background": { "$ref": "#/$defs/statementArray" },
+        "mainThread": { "$ref": "#/$defs/statementArray" },
+        "wait": { "type": "boolean", "default": false }
+      }
+    },
+    "callStmt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "callee"],
+      "properties": {
+        "kind": { "const": "call" },
+        "callee": { "type": "string", "minLength": 1 },
+        "args": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/expr" },
+          "default": []
+        }
+      }
+    },
+    "assignStmt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "target", "value"],
+      "properties": {
+        "kind": { "const": "assign" },
+        "target": { "type": "string", "minLength": 1 },
+        "value": { "$ref": "#/$defs/expr" }
+      }
+    },
+    "emitEventStmt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "name"],
+      "properties": {
+        "kind": { "const": "emit_event" },
+        "name": { "$ref": "#/$defs/identifier" },
+        "args": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/expr" },
+          "default": []
+        }
+      }
+    },
+    "rawStmt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "text"],
+      "properties": {
+        "kind": { "const": "raw" },
+        "text": { "type": "string", "minLength": 1 }
+      }
+    },
+    "statement": {
+      "oneOf": [
+        { "$ref": "#/$defs/ifStmt" },
+        { "$ref": "#/$defs/switchStmt" },
+        { "$ref": "#/$defs/loopStmt" },
+        { "$ref": "#/$defs/returnStmt" },
+        { "$ref": "#/$defs/tryStmt" },
+        { "$ref": "#/$defs/threadStmt" },
+        { "$ref": "#/$defs/callStmt" },
+        { "$ref": "#/$defs/assignStmt" },
+        { "$ref": "#/$defs/emitEventStmt" },
+        { "$ref": "#/$defs/rawStmt" }
+      ]
+    },
+    "statementArray": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/statement" },
+      "default": []
+    },
+    "bodySegment": {
+      "oneOf": [
+        { "$ref": "#/$defs/statement" },
+        { "$ref": "#/$defs/inlineJava" },
+        { "$ref": "#/$defs/javaBlock" }
+      ]
+    },
+    "methodBody": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "mode", "segments"],
+      "properties": {
+        "kind": { "const": "body" },
+        "mode": {
+          "enum": ["结绳", "java_inline", "java_block", "mixed"]
+        },
+        "segments": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/bodySegment" },
+          "default": []
+        }
+      }
+    },
+    "methodDecl": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "name", "params", "annotations", "body", "blockEnd"],
+      "properties": {
+        "kind": { "const": "method" },
+        "name": { "$ref": "#/$defs/methodName" },
+        "params": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/param" },
+          "default": []
+        },
+        "returnType": { "$ref": "#/$defs/typeRef" },
+        "annotations": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/annotation" },
+          "default": []
+        },
+        "body": { "$ref": "#/$defs/methodBody" },
+        "blockEnd": { "const": "结束 方法" }
+      }
+    },
+    "propReadDecl": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "name", "params", "returnType", "annotations", "body", "blockEnd"],
+      "properties": {
+        "kind": { "const": "prop_read" },
+        "name": { "$ref": "#/$defs/identifier" },
+        "params": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/param" },
+          "default": []
+        },
+        "returnType": { "$ref": "#/$defs/typeRef" },
+        "annotations": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/annotation" },
+          "default": []
+        },
+        "body": { "$ref": "#/$defs/methodBody" },
+        "blockEnd": { "const": "结束 属性" }
+      }
+    },
+    "propWriteDecl": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "name", "params", "annotations", "body", "blockEnd"],
+      "properties": {
+        "kind": { "const": "prop_write" },
+        "name": { "$ref": "#/$defs/identifier" },
+        "params": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/param" }
+        },
+        "returnType": { "$ref": "#/$defs/typeRef" },
+        "annotations": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/annotation" },
+          "default": []
+        },
+        "body": { "$ref": "#/$defs/methodBody" },
+        "blockEnd": { "const": "结束 属性" }
+      }
+    },
+    "eventDefineDecl": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "name", "params", "annotations"],
+      "properties": {
+        "kind": { "const": "event_define" },
+        "name": { "$ref": "#/$defs/identifier" },
+        "params": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/param" },
+          "default": []
+        },
+        "returnType": { "$ref": "#/$defs/typeRef" },
+        "annotations": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/annotation" },
+          "default": []
+        }
+      }
+    },
+    "eventImplDecl": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "name", "params", "annotations", "body", "blockEnd"],
+      "properties": {
+        "kind": { "const": "event_impl" },
+        "receiver": { "$ref": "#/$defs/identifier" },
+        "name": { "$ref": "#/$defs/identifier" },
+        "params": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/param" },
+          "default": []
+        },
+        "returnType": { "$ref": "#/$defs/typeRef" },
+        "annotations": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/annotation" },
+          "default": []
+        },
+        "body": { "$ref": "#/$defs/methodBody" },
+        "blockEnd": { "const": "结束 事件" }
+      }
+    },
+    "member": {
+      "oneOf": [
+        { "$ref": "#/$defs/constDecl" },
+        { "$ref": "#/$defs/varDecl" },
+        { "$ref": "#/$defs/methodDecl" },
+        { "$ref": "#/$defs/propReadDecl" },
+        { "$ref": "#/$defs/propWriteDecl" },
+        { "$ref": "#/$defs/eventDefineDecl" },
+        { "$ref": "#/$defs/eventImplDecl" }
+      ]
+    },
+    "classDecl": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "name", "annotations", "members", "blockEnd"],
+      "properties": {
+        "kind": { "const": "class" },
+        "name": { "$ref": "#/$defs/identifier" },
+        "genericParams": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/identifier" },
+          "uniqueItems": true,
+          "default": []
+        },
+        "extends": { "$ref": "#/$defs/typeRef" },
+        "annotations": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/annotation" },
+          "default": []
+        },
+        "members": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/member" },
+          "default": []
+        },
+        "blockEnd": { "const": "结束 类" }
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "filePath": { "type": "string", "minLength": 1 },
+        "lineCount": { "type": "integer", "minimum": 1 },
+        "returnStyle": { "enum": [":", "为", "mixed"] },
+        "sourceHash": { "type": "string" }
+      }
+    }
+  }
+}
