@@ -54,6 +54,12 @@ Prefer grammar and template correctness over broad API enumeration.
 - Zero Rule +18: conditional-loop syntax must use parentheses: `循环(条件)`; do not generate `循环 条件`.
 - Zero Rule +19: function-call signatures are strict. Verify parameter count/types against existing definitions; do not invent overloads (for example forbid `到小数(文本)` when only zero-arg `到小数()` exists).
 - Zero Rule +20: function-call form is strict. Instance methods must be called by instance receiver (`对象.方法(...)`); static methods must be called by type/class receiver (`类型.方法(...)`). Forbid global-call misuse such as `到文本(变量名)` when correct form is `变量名.到文本()`.
+- Zero Rule +21: guarded-else branch syntax is strict: use `否则 条件` only (no trailing `则`). Forbid both `否则如果` and `否则 条件 则`.
+- Zero Rule +22: file/class structure is strict. A file may contain multiple top-level classes, but nested/inner class declarations inside a class are unsupported and must not be generated.
+- Zero Rule +23: `@导入Java` scope is class-local and independent. Do not assume imports declared for one class apply to other classes in the same file.
+- Zero Rule +24: annotation explanation output is mandatory. For every emitted key annotation, explain target, purpose, and critical parameters. Annotations not attached to valid targets and not consumed by compile stage are treated as ineffective and may be cleared during compilation.
+- Zero Rule +25: global-class annotations must not be abused. Use `@全局类` / `@全局基础类` only when cross-module global entry is explicitly required by the task or existing design.
+- Zero Rule +26: for `@附加可变清单` placeholder completion, define a separate dedicated class containing exactly one empty parameter-carrier method. This method must be used only for compile-time template parameter mapping (for example `方法 XXX(输入法类名:文本,输入法名称:文本,输入法配置:文本) ...` with no runtime logic).
 - Do not generate `包名 ...` by default.
 - Main window must be `类 启动窗口 : 窗口`.
 - Page classes must inherit `窗口` (do not use `组件容器` as page base class).
@@ -125,9 +131,14 @@ Always load these before writing test pages or production code (paths are relati
 - In layout declaration blocks, keep `@布局配置` definitions contiguous with no blank lines between adjacent definition pairs.
 - For object instance declaration, use auto-creation form `变量 名称 : 类型`; forbid `= 创建 类型()` generation.
 - In multi-branch conditions, use `否则 条件` syntax; do not emit `否则如果`.
+- In multi-branch guarded else branch, do not append `则` after `否则 条件`.
 - Use `循环(条件)` for conditional loops.
 - Validate call arity/type against real function signatures before generation.
 - Validate call kind and receiver form before generation: instance method -> `对象.方法(...)`, static method -> `类型.方法(...)`; forbid `到文本(变量名)`-style global misuse.
+- Respect class-structure constraints: allow multiple top-level classes in one file, but do not generate nested/inner classes.
+- Treat `@导入Java` as class-local independent declarations; do not reuse import scope across classes implicitly.
+- For annotation-heavy generation (for example `@附加权限`/`@附加清单`/`@附加清单.全局属性`/`@附加清单.组件属性`/`@附加可变清单`/`@编译时处理参数`), output concise annotation explanations and verify target validity.
+- For `@附加可变清单`, use a standalone class + single empty method template-parameter carrier pattern; do not mix extra methods or runtime logic in that carrier class.
 - For any Java API/class used in `@导入Java` or embedded Java, verify Android availability first; do not use Java-SE-only APIs.
 - If Agent is available and not forbidden by user, Agent must participate in all three phases: document scan, project understanding, and generated-code review.
 
@@ -170,9 +181,12 @@ After the mandatory set is loaded, load request-specific references:
 - Keep `@code` and `@end` paired.
 - Use `#参数名` / `#this` macros in Java-embedded code.
 - Use `==` / `!=` (not `=`) in condition comparisons.
+- In guarded else branches, never generate `否则 条件 则`; correct form is `否则 条件`.
 - Treat Android API compatibility as highest-priority gating for all Java API imports/calls.
 - Do not bypass the highest-priority Agent rule unless user explicitly forbids Agent.
 - Do not invent unseen annotation names unless explicitly requested.
+- Do not generate nested/inner class declarations.
+- Do not assume `@导入Java` scope is shared between classes.
 
 ## Built-In Navigation (Migrated From README)
 
