@@ -30,6 +30,11 @@ Prefer grammar and template correctness over broad API enumeration.
   - If Python is available, run `python <active-skill-root>/scrpits/list_doc_absolute_paths.py` first.
   - Use the script output absolute paths as the primary doc loading paths.
   - If Python is unavailable, fall back to the original relative paths in this file's Mandatory Read Set.
+- Index JSON Ops Rule (Preferred):
+  - If the task involves index lookup/stat/search/consistency checks, run `python <active-skill-root>/scrpits/index_json_ops.py` instead of ad-hoc manual JSON parsing.
+  - Prefer subcommands: `list`, `stats`, `search`, `validate`.
+  - Use `--indexes` to limit scan scope and `--json` when structured machine-readable output is needed.
+  - If Python is unavailable, fall back to direct read of `references/indexes/*.json`.
 - Full-Read Rule (Strict): before any coding, read the full Mandatory Read Set in this file (covers all active docs/json/schema/indexes). Skipping is not allowed.
 - Formatting Redline (Highest): do not introduce unintended spaces in layout blocks or UI literals. Examples: use `猜正面` (not `猜 正面`), `总次数:0|胜利:0|失败:0` (no auto-added separator spaces unless user asks).
 - Layout Key Redline: use canonical Chinese layout keys only (`高度`, not `height`; `宽度`, not `width`).
@@ -75,7 +80,7 @@ Prefer grammar and template correctness over broad API enumeration.
 
 1. Detect target domain from file path and surrounding existing code style (`结绳.JVM`, `结绳.安卓`, `结绳.Meng`, `结绳.基本`) and whether the task is syntax generation or syntax profiling.
 2. Determine current skill mode first (Global Skill Mode vs Project Skill Mode) and lock doc root to active skill `references/` only.
-3. Before writing code, read the full mandatory set (all listed `references/` docs + required project files). If Agent is available and not forbidden by user, run Agent to review docs and project and deduplicate evidence. If Java API is involved, complete Android-availability check before writing imports/calls.
+3. Before writing code, read the full mandatory set (all listed `references/` docs + required project files). If Agent is available and not forbidden by user, run Agent to review docs and project and deduplicate evidence. If index evidence is needed, prefer `scrpits/index_json_ops.py` for query/validation. If Java API is involved, complete Android-availability check before writing imports/calls.
 4. Select nearest template and instantiate with minimal edits in `源代码/`.
 5. Add annotations and embedded Java only when necessary.
 6. Run post-generation checklist and fix violations.
@@ -92,6 +97,44 @@ Prefer grammar and template correctness over broad API enumeration.
   - Keep skill scope locked to the active skill root.
 - No-Python fallback:
   - Use the original relative paths in Mandatory Read Set (unchanged fallback behavior).
+
+## Index JSON Operations (Preferred)
+
+- Script path: `scrpits/index_json_ops.py`
+- Commands:
+  - `python <active-skill-root>/scrpits/index_json_ops.py list`
+  - `python <active-skill-root>/scrpits/index_json_ops.py stats --indexes api structured annotation`
+  - `python <active-skill-root>/scrpits/index_json_ops.py search <关键词> --indexes api structured --sections methods members --limit 20`
+  - `python <active-skill-root>/scrpits/index_json_ops.py validate --fail-on-warning`
+- Usage rule:
+  - For `references/indexes/*.json` operations, prefer this script over manual parsing to keep output and checks consistent.
+
+Parameter explanation (must follow):
+
+- Common:
+  - `command`: required subcommand; one of `list` / `stats` / `search` / `validate`.
+
+- `list`:
+  - `--json`: optional; emit JSON output instead of plain text list.
+
+- `stats`:
+  - `--indexes`: optional; choose from `annotation api structured manifest manifest_v2`; default is all indexes.
+  - `--json`: optional; emit JSON output.
+
+- `search`:
+  - `keyword`: required positional argument; plain keyword by default, or regex when `--regex` is enabled.
+  - `--indexes`: optional; choose search scope from `annotation api structured manifest manifest_v2`; default is `annotation api structured`.
+  - `--sections`: optional; section filter (for example `classes methods members annotations`).
+  - `--limit`: optional integer; max returned items; default `50`.
+  - `--ignore-case`: optional flag; case-insensitive search.
+  - `--regex`: optional flag; treat `keyword` as regular expression.
+  - `--show-raw`: optional flag; include `raw` field in text output.
+  - `--json`: optional; emit JSON output.
+
+- `validate`:
+  - `--indexes`: optional; choose validation scope from `annotation api structured manifest manifest_v2`; default is all indexes.
+  - `--fail-on-warning`: optional flag; return non-zero exit code when warnings exist.
+  - `--json`: optional; emit JSON output.
 
 ## Mandatory Read Set (Must Load Before Coding)
 
@@ -117,6 +160,7 @@ Always load these before writing test pages or production code (paths are relati
 - `references/indexes/t_lang_manifest.json`
 - `references/indexes/t_lang_manifest_v2.json`
 - `references/indexes/t_lang_structured_members.json`
+- When querying index records/counts, use `scrpits/index_json_ops.py` as first choice.
 - Project source structure and peer code under `源代码/**/*.t` (read nearby same-domain files first).
 - 必读 `绳包/安卓基本库/源代码/安卓_可视化组件.t` 用于组件能力确认（只读检索）。
 - Use files under `绳包/**/源代码/*.t` only for lookup/verification (for example `绳包/安卓基本库/源代码/安卓_可视化组件.t`), not as write targets.
