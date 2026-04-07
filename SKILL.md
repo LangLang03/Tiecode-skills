@@ -20,6 +20,7 @@ Prefer grammar and template correctness over broad API enumeration.
 - Agent Redline (Highest Priority):
   - If Agent is available and the user has not explicitly forbidden Agent, Agent participation is mandatory.
   - Agent must cover all three phases: document scan, project understanding, and generated-code review.
+  - Generated-code review is required on every generation turn/round; do not reuse first-turn or previous-turn review as a substitute.
   - This rule has higher priority than optimization/convenience rules; do not skip Agent phases.
 - Android Runtime Redline (Highest Priority):
   - Target runtime is Android (ART), not Java SE/JRE.
@@ -74,7 +75,8 @@ Prefer grammar and template correctness over broad API enumeration.
 - Zero Rule +28（Top Priority / Hard Requirement）: for `@禁止创建对象` classes, forbid all instance construction forms, including auto-creation declaration (`变量 名称 : 类型`) and explicit creation (`变量 名称 : 类型 = 创建 类型()`). Violation is blocking and must be fixed before continuing.
 - Zero Rule +29（Top Priority）: `变量 名称 : 类型?` is declaration-only (no auto-creation). Use it for deferred assignment or nullable references when object creation must not happen.
 - Zero Rule +30（Top Priority）: do not use language keywords as identifiers (class names, method names, variable names, parameter names, constant names, event names, etc.).
-- Zero Rule +31（Top Priority）: array types use suffix brackets and support multi-dimension: `类型[]`, `类型[][]`, `类型[][][]` ...
+- Zero Rule +31（Top Priority）: array types use suffix brackets and support multi-dimension: `类型[]`, `类型[][]`, `类型[][][]` ... Arrays can be initialized with braces, for example `变量 数组 : 整数[] = {1,2,3}`.
+- Zero Rule +32（Top Priority）: direct conversion from `小数` to `单精小数` is not supported. Only when conversion is strictly necessary, use `到文本().到单精小数()` (or project-defined equivalent method name) or use an `@code` block.
 - Do not generate `包名 ...` by default.
 - Main window must be `类 启动窗口 : 窗口`.
 - Page classes must inherit `窗口` (do not use `组件容器` as page base class).
@@ -94,7 +96,7 @@ Prefer grammar and template correctness over broad API enumeration.
 4. Select nearest template and instantiate with minimal edits in `源代码/`.
 5. Add annotations and embedded Java only when necessary.
 6. Run post-generation checklist and fix violations.
-7. If Agent is available and not forbidden by user, run Agent review on generated code and apply required fixes.
+7. If Agent is available and not forbidden by user, run Agent review on generated code for this round and apply required fixes. This step is mandatory every round.
 
 ## Absolute Path Discovery (Preferred)
 
@@ -187,7 +189,8 @@ Always load these before writing test pages or production code (paths are relati
 - For classes with `@禁止创建对象`, forbid auto-creation declaration (`变量 名称 : 类型`) and explicit creation; use class-level static calls or declaration-only reference `变量 名称 : 类型?`.
 - Treat `变量 名称 : 类型?` as declaration-only (no auto-creation); assign later when needed.
 - Do not use language keywords as any identifier.
-- For arrays, use suffix bracket form `类型[]` and support multi-dimension `类型[][][]`.
+- For arrays, use suffix bracket form `类型[]` and support multi-dimension `类型[][][]`. Brace initialization is allowed: `变量 名称 : 类型[] = {值1,值2,值3}`.
+- For `小数 -> 单精小数`, do not generate direct conversion. Only generate conversion when strictly required, via `到文本().到单精小数()` (or project-defined equivalent) or an `@code` block.
 - In multi-branch conditions, use `否则 条件` syntax; do not emit `否则如果`.
 - In multi-branch guarded else branch, do not append `则` after `否则 条件`.
 - Use `循环(条件)` for conditional loops.
@@ -198,12 +201,13 @@ Always load these before writing test pages or production code (paths are relati
 - For annotation-heavy generation (for example `@附加权限`/`@附加清单`/`@附加清单.全局属性`/`@附加清单.组件属性`/`@附加可变清单`/`@编译时处理参数`), output concise annotation explanations and verify target validity.
 - For `@附加可变清单`, use a standalone class + single empty method template-parameter carrier pattern; do not mix extra methods or runtime logic in that carrier class.
 - For any Java API/class used in `@导入Java` or embedded Java, verify Android availability first; do not use Java-SE-only APIs.
-- If Agent is available and not forbidden by user, Agent must participate in all three phases: document scan, project understanding, and generated-code review.
+- If Agent is available and not forbidden by user, Agent must participate in all three phases: document scan, project understanding, and generated-code review on every round.
 
 Execution gate:
 - Do not start from only 2-3 files.
 - Before code output, print a full "已读取文件清单" that covers every file in this mandatory set.
 - If Agent is available and user has not forbidden Agent, do not bypass mandatory Agent phases.
+- Do not treat first-round review as sufficient; code review must be executed again for each new generation round.
 
 ## Reference Loading Map
 
@@ -242,13 +246,15 @@ After the mandatory set is loaded, load request-specific references:
 - In guarded else branches, never generate `否则 条件 则`; correct form is `否则 条件`.
 - Treat Android API compatibility as highest-priority gating for all Java API imports/calls.
 - Do not bypass the highest-priority Agent rule unless user explicitly forbids Agent.
+- Do not skip code review in later turns; per-round review is mandatory when Agent is available and not forbidden.
 - Do not invent unseen annotation names unless explicitly requested.
 - Do not generate nested/inner class declarations.
 - Do not assume `@导入Java` scope is shared between classes.
 - Do not instantiate classes annotated with `@禁止创建对象` by any syntax form; treat this as a blocking hard requirement.
 - Treat `变量 名称 : 类型?` as declaration-only (no auto-creation).
 - Do not use language keywords as identifiers.
-- Use array type syntax with one or more `[]` suffixes (`类型[]`, `类型[][]`, `类型[][][]`).
+- Use array type syntax with one or more `[]` suffixes (`类型[]`, `类型[][]`, `类型[][][]`). Array literals may use brace initialization (`变量 名称 : 类型[] = {值1,值2,值3}`).
+- Treat `小数 -> 单精小数` as non-direct-convertible in 结绳 layer; when unavoidable, convert via `到文本().到单精小数()` or use `@code`.
 
 ## Built-In Navigation (Migrated From README)
 
