@@ -10,6 +10,94 @@ description: Write, refactor, review, and repair Tiecode `.t` 结绳代码 with 
 Generate and edit `.t` code that is syntactically valid first, style-consistent second, and API-complete third.
 Prefer grammar and template correctness over broad API enumeration.
 
+## Syntax & Logic Focus (No Business Injection)
+
+Use this section as a strict generation lens: prioritize grammar correctness, call semantics, and control-flow validity before introducing any feature code.
+
+### Logic Constraints (Project-Derived, Syntax-Level)
+
+- Condition discipline:
+  - `=` is assignment only.
+  - `==` / `!=` must be used for comparisons.
+- Call-shape discipline:
+  - Instance member: `对象.方法(...)`
+  - Static member: `类型.方法(...)`
+  - Forbid pseudo-global calls when member call is required.
+- Construction discipline:
+  - Normal typed declaration may auto-create: `变量 名称 : 类型`
+  - For `@禁止创建对象` classes, forbid all instance construction forms.
+  - Use static access or declaration-only reference: `变量 名称 : 类型?`
+- Loop and branch discipline:
+  - Use `循环(条件)` (must include parentheses).
+  - Multi-branch must use `否则 条件`, not `否则如果`.
+  - Guarded branch must not use `否则 条件 则`.
+- Layout-key discipline:
+  - Built-in structural keys: `父布局` / `根布局`.
+  - Other keys must map to `属性读/属性写` or `@布局属性` methods.
+  - `@布局属性` keys in `@布局配置` must use `@key=value` form.
+- Event/lifecycle discipline:
+  - Window event wiring should start in `事件 <窗口>:创建完毕()`.
+  - Keep event subscriptions centralized (`订阅事件()` first, then side effects).
+- Async/UI discipline:
+  - UI mutation should happen on main thread callbacks.
+  - Always provide explicit failure path for async request logic.
+
+### Minimal Syntax Examples (Abstract)
+
+Comparison:
+
+```t
+// 正确
+如果 计数 == 0 则
+结束 如果
+
+// 错误
+如果 计数 = 0 则
+结束 如果
+```
+
+Loop condition:
+
+```t
+// 正确
+循环(索引 < 长度)
+	索引 = 索引 + 1
+结束 循环
+
+// 错误
+循环 索引 < 长度
+	索引 = 索引 + 1
+结束 循环
+```
+
+Static vs instance call:
+
+```t
+// 正确 实例调用
+变量 文本值 : 文本 = 数值.到文本()
+
+// 正确 静态调用
+变量 时间戳 : 长整数 = 系统工具.当前时间毫秒()
+```
+
+Non-instantiable class usage:
+
+```t
+@禁止创建对象
+类 工具类
+	@静态
+	方法 校验() : 逻辑型
+		返回 真
+	结束 方法
+结束 类
+
+// 正确
+变量 结果 : 逻辑型 = 工具类.校验()
+
+// 正确（仅声明，不创建）
+变量 延迟引用 : 工具类?
+```
+
 ## Absolute Rules (Load First)
 
 - Encoding Redline (Top-Most Priority / Blocking, Above All Rules):
