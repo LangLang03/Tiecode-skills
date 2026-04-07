@@ -18,6 +18,7 @@ description: Write, refactor, review, and repair Tiecode `.t` 缁撶怀浠ｇ爜
 - All document viewing and editing must use UTF-8 without BOM.
 - Layout numeric values in `@布局配置` support both `px` and `dp` for normal numeric layout keys: default to `px` when unit is omitted, and prefer `dp` unless there is an explicit reason to use `px`. For `@布局属性` method keys (`@方法名=值`), `dp` suffix is not supported.
 - Tiecode layout is Java-backed at runtime: when designing/writing layout, you may follow Java-style implementation if a corresponding implementation class exists, or encapsulate it yourself via `@code`.
+- Java-block language boundary is strict: inside `code` / `@code...@end`, do not use Tiecode literals/keywords directly (for example `真`/`假`/`空`/`返回`); use Java forms (`true`/`false`/`null`/`return`) and use `#变量` only for Tiecode symbol bridging.
 - For layout/component work, use a strict pre-reference flow: inspect underlying implementation first, simulate the generated Java mapping of current Tiecode declarations, and only then use internet-findable Java/Android layout patterns as reference.
 - External layout references are advisory only: before emission, re-verify local mapping/implementations exist (class, method, property, signature). If local evidence is missing, stop and report uncertainty.
 - In this workflow, do not create/edit local `.java` files; complete implementation in Tiecode (`.t`) + `@code` bridge only, unless the user explicitly requests Java-file changes.

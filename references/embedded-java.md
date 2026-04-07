@@ -61,6 +61,7 @@ view.setOnClickListener(new View.OnClickListener(){
 - 不在 `code` 单行中写多行 Java 结构。
 - 结绳标识符引用必须带 `#`，否则编译后会变成未定义 Java 变量。
 - 不把 结绳 `返回` 写进 Java 块；Java 块里用 `return`。
+- Java 块中禁止直接写结绳字面量/关键字（如 `真/假/空/返回`）；应使用 Java 形式 `true/false/null/return`。
 - 目标运行时是 Android，不是 Java SE；`@导入Java` 与 `@code` 中所有 Java API 需先校验 Android 可用性。
 - 禁止直接使用 Java SE 专属 API（如 `java.awt.*`、`javax.swing.*`、`java.applet.*`），应改用 Android 框架或项目依赖中可用 API。
 - 默认禁止引入 AndroidX；仅在用户明确指定 AndroidX 时才可使用 `androidx.*` 或 AndroidX 依赖。
