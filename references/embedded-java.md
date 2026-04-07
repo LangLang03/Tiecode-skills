@@ -71,3 +71,25 @@ view.setOnClickListener(new View.OnClickListener(){
 - 一句表达式：`code ...`
 - 多行、匿名类、try/catch、override：`@code ... @end`
 
+## 7. 方法级 `@嵌入式代码` 说明
+- `@嵌入式代码` 放在方法上方，用于声明该方法采用嵌入式 Java 展开语义。
+- 使用该注解时，方法体可以只保留一个 `@code ... @end` 块；这是合法且常见的写法。
+- 典型场景是桥接已有实现类；如果没有对应实现类，可在 `@code` 中自行封装。
+- `@code` 块内出现 `});` 这类匿名类/监听器闭合片段属于正常 Java 语法，不应误判为结绳语法错误。
+- 规则证据必须按“全库”检索，不得只扫单一目录：至少包含 `源代码/` 与 `测试/绳包/安卓基本库/源代码/`。
+- 已整理的全量使用明细见 `references/indexes/embedded_code_annotation_usage.md`（当前为全库检索结果）。
+
+示例（方法体仅 `@code` 块）：
+```t
+@嵌入式代码
+方法 绑定监听()
+	@code
+	view.setOnClickListener(new View.OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			#被单击();
+		}
+	});
+	@end
+结束 方法
+```

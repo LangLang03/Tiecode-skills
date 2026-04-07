@@ -16,9 +16,10 @@ description: Write, refactor, review, and repair Tiecode `.t` 缁撶怀浠ｇ爜
   - Method/member calls must resolve to real callable targets, with matching receiver and signature context.
 - Any uncertainty must be verified first; if verification cannot be completed successfully, explicitly inform the user and immediately terminate the current generation/review flow.
 - All document viewing and editing must use UTF-8 without BOM.
-- Layout numeric values in `@布局配置` support both `px` and `dp`: default to `px` when unit is omitted, and prefer `dp` unless there is an explicit reason to use `px`.
+- Layout numeric values in `@布局配置` support both `px` and `dp` for normal numeric layout keys: default to `px` when unit is omitted, and prefer `dp` unless there is an explicit reason to use `px`. For `@布局属性` method keys (`@方法名=值`), `dp` suffix is not supported.
 - Tiecode layout is Java-backed at runtime: when designing/writing layout, you may follow Java-style implementation if a corresponding implementation class exists, or encapsulate it yourself via `@code`.
 - Do not assume software users will always operate correctly: enforce strict and comprehensive checks (input/state/boundary/error-path) to prevent crashes before approval or code emission.
+- Java-style comment requirement (top priority): unless the user explicitly requests no comments, add concise Java-style comments on class and method definitions to clarify intent/usage/constraints.
 - This rule has the highest priority, above speed and convenience, and must never be skipped in any round.
 
 ## Objective
@@ -217,7 +218,7 @@ Non-instantiable class usage:
 - Zero Rule +22: file/class structure is strict. A file may contain multiple top-level classes, but nested/inner class declarations inside a class are unsupported and must not be generated.
 - Zero Rule +23: `@瀵煎叆Java` scope is class-local and independent. Do not assume imports declared for one class apply to other classes in the same file.
 - Zero Rule +24: annotation explanation output is mandatory. For every emitted key annotation, explain target, purpose, and critical parameters. Annotations not attached to valid targets and not consumed by compile stage are treated as ineffective and may be cleared during compilation.
-- Zero Rule +25: global-class annotations must not be abused. Use `@鍏ㄥ眬绫籤 / `@鍏ㄥ眬鍩虹绫籤 only when cross-module global entry is explicitly required by the task or existing design.
+- Zero Rule +25: global-class annotation discipline is strict. `@鍏ㄥ眬鍩虹绫籤 is reserved exclusively for class `瀵硅薄绫?` (ObjectClass), and this global base slot is already occupied; do not generate or add `@鍏ㄥ眬鍩虹绫籤 anywhere else. `@鍏ㄥ眬绫籤 may be used only when cross-module global entry is explicitly required.
 - Zero Rule +26: for `@闄勫姞鍙彉娓呭崟` placeholder completion, define a separate dedicated class containing exactly one empty parameter-carrier method. This method must be used only for compile-time template parameter mapping (for example `鏂规硶 XXX(杈撳叆娉曠被鍚?鏂囨湰,杈撳叆娉曞悕绉?鏂囨湰,杈撳叆娉曢厤缃?鏂囨湰) ...` with no runtime logic).
 - Zero Rule +27锛圱op Priority / Hard Requirement锛? for classes annotated `@绂佹鍒涘缓瀵硅薄`, inspect the class definition first and confirm usable members. Treat these classes as non-instantiable utility/meta classes.
 - Zero Rule +28锛圱op Priority / Hard Requirement锛? for `@绂佹鍒涘缓瀵硅薄` classes, forbid all instance construction forms, including auto-creation declaration (`鍙橀噺 鍚嶇О : 绫诲瀷`) and explicit creation (`鍙橀噺 鍚嶇О : 绫诲瀷 = 鍒涘缓 绫诲瀷()`). Violation is blocking and must be fixed before continuing.
