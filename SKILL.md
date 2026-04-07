@@ -17,6 +17,9 @@ Prefer grammar and template correctness over broad API enumeration.
   - Do not rely on system-default ANSI/locale codepage for decoding `.t`, `.md`, `.json`, or `.java`.
   - Any generated or modified file must be persisted as UTF-8 (no BOM).
   - If decoded text appears garbled, stop and re-read with explicit UTF-8 before analysis or edits.
+- Rule-Evidence Corpus Redline (Highest Priority for policy expansion):
+  - When expanding SKILL rules/conventions/requirements, use `绳包/安卓基本库/源代码/**/*.t` as primary evidence source.
+  - Evidence lookup is read-only; never write into the above reference corpus.
 - Object-Creation Ban Redline (Hard Requirement / Blocking):
   - For any class annotated with `@禁止创建对象`, instance construction is strictly forbidden.
   - Forbidden forms include both auto-creation declaration `变量 名称 : 类型` and explicit creation `变量 名称 : 类型 = 创建 类型()`.
@@ -104,11 +107,12 @@ Prefer grammar and template correctness over broad API enumeration.
 
 1. Detect target domain from file path and surrounding existing code style (`结绳.JVM`, `结绳.安卓`, `结绳.Meng`, `结绳.基本`) and whether the task is syntax generation or syntax profiling.
 2. Determine current skill mode first (Global Skill Mode vs Project Skill Mode) and lock doc root to active skill `references/` only.
-3. Before writing code, read the full mandatory set (all listed `references/` docs + required project files). If Agent is available and not forbidden by user, run Agent to review docs and project and deduplicate evidence. If index evidence is needed, prefer `scrpits/index_json_ops.py` for query/validation. If Java API is involved, complete Android-availability check before writing imports/calls.
-4. Select nearest template and instantiate with minimal edits in `源代码/`.
-5. Add annotations and embedded Java only when necessary.
-6. Run post-generation checklist and fix violations.
-7. If Agent is available and not forbidden by user, run Agent review on generated code for this round and apply required fixes. This step is mandatory every round.
+3. For SKILL policy update tasks, collect evidence from mandatory docs and `绳包/安卓基本库/源代码/**/*.t` before writing.
+4. Before writing code, read the full mandatory set (all listed `references/` docs + required project files). If Agent is available and not forbidden by user, run Agent to review docs and project and deduplicate evidence. If index evidence is needed, prefer `scrpits/index_json_ops.py` for query/validation. If Java API is involved, complete Android-availability check before writing imports/calls.
+5. Select nearest template and instantiate with minimal edits in `源代码/`.
+6. Add annotations and embedded Java only when necessary.
+7. Run post-generation checklist and fix violations.
+8. If Agent is available and not forbidden by user, run Agent review on generated code for this round and apply required fixes. This step is mandatory every round.
 
 ## Absolute Path Discovery (Preferred)
 
@@ -189,6 +193,9 @@ Always load these before writing test pages or production code (paths are relati
 - Project source structure and peer code under `源代码/**/*.t` (read nearby same-domain files first).
 - 必读 `绳包/安卓基本库/源代码/安卓_可视化组件.t` 用于组件能力确认（只读检索）。
 - Use files under `绳包/**/源代码/*.t` only for lookup/verification (for example `绳包/安卓基本库/源代码/安卓_可视化组件.t`), not as write targets.
+- For SKILL policy expansion tasks, additionally sample and compare patterns from:
+  - `绳包/安卓基本库/源代码/**/*.t`
+- Do not write into the above reference corpora; use them as evidence only.
 - Verify property read/write support in the above files before emitting property access or non-built-in layout keys.
 - For every layout key, verify it maps to either a property accessor (`属性读/属性写`) or a `@布局属性` method; built-in structural keys `父布局/根布局` are exempt from this lookup.
 - For every `@布局属性` method used as layout key, verify two-parameter signature and `@key=value` usage form.
@@ -327,4 +334,3 @@ When producing code for users:
 1. Output final `.t` code first.
 2. Briefly list syntax-critical decisions (annotation, return style, block closure).
 3. Mention unresolved assumptions explicitly.
-

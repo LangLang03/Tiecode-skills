@@ -60,15 +60,18 @@ def first_existing(relative_path: str, roots: list[Path]) -> str:
     return ""
 
 
-def first_glob(pattern: str, roots: list[Path]) -> str:
+def first_glob(pattern: str, roots: list[Path], files_only: bool = True) -> str:
     for root in roots:
         try:
             matches = sorted(root.glob(pattern), key=lambda p: str(p).lower())
         except Exception:
             matches = []
         for match in matches:
-            if match.is_file():
-                return str(match.resolve())
+            if files_only and not match.is_file():
+                continue
+            if not files_only and not match.exists():
+                continue
+            return str(match.resolve())
     return ""
 
 
@@ -76,6 +79,12 @@ def to_payload(skill_root: Path, workspace_roots: list[Path]) -> dict:
     references_root = (skill_root / "references").resolve()
     reference_files = collect_reference_files(references_root)
     reference_dirs = collect_reference_dirs(reference_files)
+
+    android_basic_lib_source_dir = first_existing("绳包/安卓基本库/源代码", workspace_roots)
+    if not android_basic_lib_source_dir:
+        android_basic_lib_source_dir = first_glob(
+            "**/绳包/安卓基本库/源代码", workspace_roots, files_only=False
+        )
 
     rope_component_file = first_existing("绳包/安卓基本库/源代码/安卓_可视化组件.t", workspace_roots)
     if not rope_component_file:
@@ -88,6 +97,7 @@ def to_payload(skill_root: Path, workspace_roots: list[Path]) -> dict:
         "reference_files": [str(p) for p in reference_files],
         "resolved_project_paths": {
             "source_dir": first_existing("源代码", workspace_roots),
+            "android_basic_lib_source_dir": android_basic_lib_source_dir,
             "rope_component_file": rope_component_file,
         },
         "workspace_roots_checked": [str(p) for p in workspace_roots],
@@ -114,6 +124,7 @@ def print_text(payload: dict) -> None:
     print("\n[RESOLVED_PROJECT_PATHS]")
     resolved = payload["resolved_project_paths"]
     print(f"source_dir={resolved['source_dir'] or '(not found)'}")
+    print(f"android_basic_lib_source_dir={resolved['android_basic_lib_source_dir'] or '(not found)'}")
     print(f"rope_component_file={resolved['rope_component_file'] or '(not found)'}")
 
     print("\n[WORKSPACE_ROOTS_CHECKED]")
