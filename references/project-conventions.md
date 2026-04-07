@@ -3,6 +3,7 @@
 本文件只描述通用语法约定，不绑定任何具体业务项目。
 
 ## 0. 第零规则（准确率与范围）
+- 【顶级硬规则】所有文件读写必须使用 UTF-8 无 BOM；禁止按系统默认编码读取/写入，出现乱码先按 UTF-8 重读后再继续。
 - 最高优先级规则：若支持 Agent 且用户未明确禁止，必须调用 Agent 覆盖三阶段（查看文档、理解项目、审查生成代码），不得跳过。代码审查需每轮执行，不能只做首轮。
 - 最高优先级规则：运行环境是 Android，不是 Java SE；所有 Java API 导入与调用都必须先完成 Android 可用性校验。
 - 第0标识（强制）：先完成继承链分析（当前类、父类、对象可上转类型），再决定成员访问与传参；该步骤适用于所有类，不止窗口类。
@@ -43,7 +44,7 @@
 
 ```t
 @导入Java("android.view.View")
-@外部依赖库("../../依赖库/androidx/core-1.6.0.aar")
+@外部依赖库("../../依赖库/xxx.aar")
 @外部依赖库("../../依赖库/xxx.jar")
 @外部Java文件("extra_java/xxx.java")
 @附加资源("../../素材")
@@ -52,7 +53,9 @@
 规则：
 - 仅在使用内嵌 Java 时才添加 `@导入Java`。
 - `@导入Java` 与 `@code` 中使用的 Java API 必须先验证 Android 可用性；不得直接使用 Java SE 专属 API（如 `java.awt.*`、`javax.swing.*`、`java.applet.*`）。
+- 用户未明确指定 AndroidX 时，禁止引入 AndroidX（`androidx.*`）依赖与 API。
 - 同文件多类场景下，`@导入Java` 需按类独立声明，不能把前一个类的导入当作后一个类的默认导入。
+- 外部 Java 组件封装场景（`@外部Java文件` + `@导入Java("包名.类型名")`）下，`@code` 中 `onCreateView/getView` 的返回类型、局部变量、强转统一使用简单类型名 `类型名`，不要混用 `包名.类型名`。
 - 外部库路径统一用相对路径，优先放在 `依赖库/` 或 `绳包` 内。
 - 资源目录通过 `@附加资源` 暴露给项目。
 - `so`、`jar`、`aar` 均按“外部依赖库”模式管理，路径保持可追踪。
@@ -61,6 +64,26 @@
 - `@附加清单(...)` / `@附加清单.全局属性(...)` / `@附加清单.组件属性(...)`：清单片段声明
 - `@附加可变清单([[...${参数名}...]])` + `@编译时处理参数`：编译期模板注入
 - `@附加可变清单` 场景必须使用“单独类 + 单个空方法”补全占位参数；方法仅用于参数映射（例如 `方法 XXX(输入法类名:文本,输入法名称:文本,输入法配置:文本) ...`），不得混入运行时逻辑
+
+组件封装示例（正确）：
+```t
+@外部Java文件("./TimeTextView.java")
+@导入Java("rn_1.TimeTextView")
+类 时间显示框 : 文本框
+	@code
+	@Override
+	public TimeTextView onCreateView(android.content.Context context) {
+		TimeTextView view = new TimeTextView(context);
+		return view;
+	}
+
+	@Override
+	public TimeTextView getView() {
+		return (TimeTextView) view;
+	}
+	@end
+结束 类
+```
 
 ## 3. 布局模式（注解驱动）
 

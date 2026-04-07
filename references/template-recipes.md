@@ -1,4 +1,4 @@
-﻿# 模板配方（高复用实例）
+# 模板配方（高复用实例）
 
 ## 1. 主窗口页面模板（推荐默认）
 ```t
@@ -133,3 +133,32 @@
 	结束提交到新线程()
 结束 方法
 ```
+
+## 10. 外部 Java 组件封装（导入 + 视图覆写）
+```t
+@外部Java文件("./TimeTextView.java")
+@导入Java("rn_1.TimeTextView")
+类 时间显示框 : 文本框
+	@code
+	public #<时间显示框>(android.content.Context context) {
+		super(context);
+	}
+
+	@Override
+	public TimeTextView onCreateView(android.content.Context context) {
+		TimeTextView view = new TimeTextView(context);
+		return view;
+	}
+
+	@Override
+	public TimeTextView getView() {
+		return (TimeTextView) view;
+	}
+	@end
+结束 类
+```
+
+规则：
+- `@导入Java` 用全限定名（如 `rn_1.TimeTextView`）声明导入。
+- 导入后，在 `@code` 里统一使用简单类型名（`TimeTextView`）做返回类型、局部变量和强转。
+- 不要在 `onCreateView/getView` 里混用 `rn_1.TimeTextView` 这类包前缀类型名。

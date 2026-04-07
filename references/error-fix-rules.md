@@ -1,4 +1,4 @@
-﻿# 常见错误与修复规则
+# 常见错误与修复规则
 
 阻断说明（硬性需求）：
 - 一旦发现对 `@禁止创建对象` 类的任何实例化（自动创建或显式 `创建`），必须先修复该问题，再进行其他规则检查与代码生成。
@@ -210,7 +210,7 @@ public #<测试页面>(android.content.Context context) {
 
 ## 39. 将 Java SE API 误用于 Android
 错误：在 Android 目标代码中直接导入/调用 Java SE 专属 API（如 `java.awt.*`、`javax.swing.*`、`java.applet.*`）。  
-修复：先做 Android 可用性校验；仅使用 Android/AndroidX/依赖库中可用 API，或改写为项目已有可用实现。
+修复：先做 Android 可用性校验；仅使用 Android 框架/依赖库中可用 API，或改写为项目已有可用实现。
 
 ## 40. 未校验 Java API 的 Android 可用性
 错误：使用 `@导入Java` 或 `@code` 时，未验证 API 是否在 Android 运行时可用。  
@@ -299,4 +299,16 @@ public #<测试页面>(android.content.Context context) {
 ## 61. 误把 `@位于某组件之下/上` 当作层级调整
 错误：把 `@位于某组件之下` / `@位于某组件之上` 当作改变父子关系或 z 顺序的操作使用。
 修复：按 2D 平面排布语义使用该字段（上下位置关系）；若需要改变父子层级请调整 `父布局`，若需要控制显示层次请使用对应可检索的层次能力，而不是误用该字段。
+
+## 62. 未经用户指定擅自引入 AndroidX
+错误：在用户未明确要求 AndroidX 时，生成了 `androidx.*` 导入、AndroidX 依赖或 AndroidX API 调用。
+修复：移除 AndroidX 用法并改用 Android 框架或项目既有非 AndroidX 能力；仅当用户明确指定 AndroidX 时才可恢复，并继续做可用性校验。
+
+## 63. 文件编码未按 UTF-8 无 BOM 读写
+错误：按系统默认编码（ANSI/本地代码页）读取或写入 `.t/.md/.json/.java`，导致中文乱码或隐式 BOM 问题。
+修复：统一使用 UTF-8 无 BOM 读写；读取阶段显式指定 UTF-8，写回阶段显式保持 UTF-8 无 BOM。若发现乱码，先按 UTF-8 重读后再继续分析与修复。
+
+## 64. 外部 Java 组件封装中误用包前缀类型名
+错误：在 `@外部Java文件` + `@导入Java("包名.类型名")` 封装场景中，`onCreateView/getView` 的返回类型、局部变量或强转写成 `包名.类型名`（如 `rn_1.TimeTextView`）。
+修复：保留 `@导入Java` 全限定名导入，但在 `@code` 中改用简单类型名（如 `TimeTextView`）统一声明返回类型、局部变量和强转，避免混用类型写法。
 

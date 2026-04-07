@@ -1,4 +1,4 @@
-﻿---
+---
 name: tiecode-tlang
 description: Write, refactor, review, and repair Tiecode `.t` 结绳代码 with strict syntax-first guidance. Use when tasks mention `.t` files, Tiecode/结绳 language grammar, annotations, OOP wrappers, embedded Java blocks (`code` or `@code/@end`), event-driven component patterns, naming/style normalization, compile-error repair, project conventions (`源代码` and `绳包`), layout annotation patterns, object reference semantics (`本对象` and `父对象`), and annotation-based dependency/resource loading.
 ---
@@ -12,6 +12,11 @@ Prefer grammar and template correctness over broad API enumeration.
 
 ## Absolute Rules (Load First)
 
+- Encoding Redline (Top-Most Priority / Blocking, Above All Rules):
+  - All file reads/writes must use UTF-8 without BOM.
+  - Do not rely on system-default ANSI/locale codepage for decoding `.t`, `.md`, `.json`, or `.java`.
+  - Any generated or modified file must be persisted as UTF-8 (no BOM).
+  - If decoded text appears garbled, stop and re-read with explicit UTF-8 before analysis or edits.
 - Object-Creation Ban Redline (Hard Requirement / Blocking):
   - For any class annotated with `@禁止创建对象`, instance construction is strictly forbidden.
   - Forbidden forms include both auto-creation declaration `变量 名称 : 类型` and explicit creation `变量 名称 : 类型 = 创建 类型()`.
@@ -25,8 +30,12 @@ Prefer grammar and template correctness over broad API enumeration.
 - Android Runtime Redline (Highest Priority):
   - Target runtime is Android (ART), not Java SE/JRE.
   - Before generating/importing/calling any Java API, verify Android availability first.
-  - Availability evidence must come from at least one source: existing project/`绳包` code, Android/AndroidX API import path, or declared dependency.
+  - Availability evidence must come from at least one source: existing project/`绳包` code, Android framework API import path, or declared dependency.
   - Do not generate unverified or Java-SE-only APIs (for example `java.awt.*`, `javax.swing.*`, `java.applet.*`).
+- AndroidX Redline (Highest Priority):
+  - Unless the user explicitly requests AndroidX, do not generate/import/call AndroidX APIs or dependencies.
+  - Forbidden by default includes `androidx.*` packages, AndroidX AAR dependencies, and AndroidX-specific wrappers.
+  - Only when user-specified may AndroidX be introduced, and it still must pass availability verification.
 - Skill Scope Redline (Highest):
   - Always resolve docs from the currently loaded skill root, not from random workspace folders.
   - Global Skill Mode: if loaded path is under `~/.codex/skills/` or `~/.trae-cn/skills/`, read docs only from `<active-skill-root>/references/`; do not scan `<workspace>/skills/**` for docs.
@@ -79,6 +88,7 @@ Prefer grammar and template correctness over broad API enumeration.
 - Zero Rule +31（Top Priority）: array types use suffix brackets and support multi-dimension: `类型[]`, `类型[][]`, `类型[][][]` ... Arrays can be initialized with braces, for example `变量 数组 : 整数[] = {1,2,3}`.
 - Zero Rule +32（Top Priority）: direct conversion from `小数` to `单精小数` is not supported. Only when conversion is strictly necessary, use `到文本().到单精小数()` (or project-defined equivalent method name) or use an `@code` block.
 - Zero Rule +33（Top Priority）: use keyword `跳出循环` to exit loop blocks in 结绳 layer. Do not generate Java `break` outside `@code`.
+- Zero Rule +34（Top Priority）: for external Java component wrappers (`@外部Java文件` + `@导入Java("包名.类型名")`), use simple imported type name in wrapper `@code` signatures/locals/casts (`类型名`), not package-prefixed names.
 - Do not generate `包名 ...` by default.
 - Main window must be `类 启动窗口 : 窗口`.
 - Page classes must inherit `窗口` (do not use `组件容器` as page base class).
@@ -163,6 +173,7 @@ Always load these before writing test pages or production code (paths are relati
 - `references/oop-annotations.md`
 - `references/embedded-java.md`
 - `references/template-recipes.md`
+- `references/component-encapsulation.md`
 - `references/naming-style.md`
 - `references/error-fix-rules.md`
 - `references/ai-generation-checklist.md`
@@ -204,7 +215,7 @@ Always load these before writing test pages or production code (paths are relati
 - Treat `@导入Java` as class-local independent declarations; do not reuse import scope across classes implicitly.
 - For annotation-heavy generation (for example `@附加权限`/`@附加清单`/`@附加清单.全局属性`/`@附加清单.组件属性`/`@附加可变清单`/`@编译时处理参数`), output concise annotation explanations and verify target validity.
 - For `@附加可变清单`, use a standalone class + single empty method template-parameter carrier pattern; do not mix extra methods or runtime logic in that carrier class.
-- For any Java API/class used in `@导入Java` or embedded Java, verify Android availability first; do not use Java-SE-only APIs.
+- For any Java API/class used in `@导入Java` or embedded Java, verify Android availability first; do not use Java-SE-only APIs, and do not use AndroidX unless user explicitly requests it.
 - If Agent is available and not forbidden by user, Agent must participate in all three phases: document scan, project understanding, and generated-code review on every round.
 
 Execution gate:
@@ -228,6 +239,8 @@ After the mandatory set is loaded, load request-specific references:
   - `references/oop-annotations.md`
 - Embedded Java bridging:
   - `references/embedded-java.md`
+- External Java component wrapper patterns:
+  - `references/component-encapsulation.md`
 - Fast scaffold generation:
   - `references/template-recipes.md`
 - Naming/style normalization:
@@ -246,14 +259,17 @@ After the mandatory set is loaded, load request-specific references:
 - Use `@运算符重载` for operator methods.
 - Keep `@code` and `@end` paired.
 - Use `#参数名` / `#this` macros in Java-embedded code.
+- Read and write all files in UTF-8 without BOM.
 - Use `==` / `!=` (not `=`) in condition comparisons.
 - In guarded else branches, never generate `否则 条件 则`; correct form is `否则 条件`.
 - Treat Android API compatibility as highest-priority gating for all Java API imports/calls.
+- Unless user explicitly requests AndroidX, do not generate any AndroidX import/dependency/API usage.
 - Do not bypass the highest-priority Agent rule unless user explicitly forbids Agent.
 - Do not skip code review in later turns; per-round review is mandatory when Agent is available and not forbidden.
 - Do not invent unseen annotation names unless explicitly requested.
 - Do not generate nested/inner class declarations.
 - Do not assume `@导入Java` scope is shared between classes.
+- For external Java component wrappers, do not use package-prefixed type names inside wrapper `@code` signatures/locals/casts when the type is already imported by `@导入Java`.
 - Do not instantiate classes annotated with `@禁止创建对象` by any syntax form; treat this as a blocking hard requirement.
 - Treat `变量 名称 : 类型?` as declaration-only (no auto-creation).
 - Do not use language keywords as identifiers.
@@ -272,6 +288,7 @@ Core navigation:
 - `references/control-flow-async.md`: `如果/否则`、`循环`、`假如/是`、容错、线程语法
 - `references/oop-annotations.md`: OOP 规则、泛型、运算符重载、注解语义
 - `references/embedded-java.md`: `code` 与 `@code/@end` 的嵌入规则与约束
+- `references/component-encapsulation.md`: 外部 Java 组件封装规则（导入、`onCreateView/getView`、类型签名）
 - `references/template-recipes.md`: 可直接复用的场景模板（组件、适配器、工具类等）
 - `references/naming-style.md`: 命名、编码风格、组织规范
 - `references/error-fix-rules.md`: 高频错误与自动修复规则

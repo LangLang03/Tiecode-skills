@@ -1,4 +1,4 @@
-﻿# tiecode-tlang
+# tiecode-tlang
 
 Tiecode `.t` 语法与生成规范 Skill。
 
