@@ -12,6 +12,11 @@ Prefer grammar and template correctness over broad API enumeration.
 
 ## Absolute Rules (Load First)
 
+- Object-Creation Ban Redline (Hard Requirement / Blocking):
+  - For any class annotated with `@禁止创建对象`, instance construction is strictly forbidden.
+  - Forbidden forms include both auto-creation declaration `变量 名称 : 类型` and explicit creation `变量 名称 : 类型 = 创建 类型()`.
+  - Violation handling is blocking: report error and stop generation/repair flow until the violation is removed.
+  - Before using such class, inspect class definition and use only allowed static members (for example `类型.方法(...)`).
 - Agent Redline (Highest Priority):
   - If Agent is available and the user has not explicitly forbidden Agent, Agent participation is mandatory.
   - Agent must cover all three phases: document scan, project understanding, and generated-code review.
@@ -65,8 +70,8 @@ Prefer grammar and template correctness over broad API enumeration.
 - Zero Rule +24: annotation explanation output is mandatory. For every emitted key annotation, explain target, purpose, and critical parameters. Annotations not attached to valid targets and not consumed by compile stage are treated as ineffective and may be cleared during compilation.
 - Zero Rule +25: global-class annotations must not be abused. Use `@全局类` / `@全局基础类` only when cross-module global entry is explicitly required by the task or existing design.
 - Zero Rule +26: for `@附加可变清单` placeholder completion, define a separate dedicated class containing exactly one empty parameter-carrier method. This method must be used only for compile-time template parameter mapping (for example `方法 XXX(输入法类名:文本,输入法名称:文本,输入法配置:文本) ...` with no runtime logic).
-- Zero Rule +27（Top Priority）: for classes annotated `@禁止创建对象`, inspect the class definition first and confirm usable members. Treat these classes as non-instantiable utility/meta classes.
-- Zero Rule +28（Top Priority）: for `@禁止创建对象` classes, forbid all instance construction forms, including auto-creation declaration (`变量 名称 : 类型`) and explicit creation (`变量 名称 : 类型 = 创建 类型()`).
+- Zero Rule +27（Top Priority / Hard Requirement）: for classes annotated `@禁止创建对象`, inspect the class definition first and confirm usable members. Treat these classes as non-instantiable utility/meta classes.
+- Zero Rule +28（Top Priority / Hard Requirement）: for `@禁止创建对象` classes, forbid all instance construction forms, including auto-creation declaration (`变量 名称 : 类型`) and explicit creation (`变量 名称 : 类型 = 创建 类型()`). Violation is blocking and must be fixed before continuing.
 - Zero Rule +29（Top Priority）: `变量 名称 : 类型?` is declaration-only (no auto-creation). Use it for deferred assignment or nullable references when object creation must not happen.
 - Zero Rule +30（Top Priority）: do not use language keywords as identifiers (class names, method names, variable names, parameter names, constant names, event names, etc.).
 - Zero Rule +31（Top Priority）: array types use suffix brackets and support multi-dimension: `类型[]`, `类型[][]`, `类型[][][]` ...
@@ -240,7 +245,7 @@ After the mandatory set is loaded, load request-specific references:
 - Do not invent unseen annotation names unless explicitly requested.
 - Do not generate nested/inner class declarations.
 - Do not assume `@导入Java` scope is shared between classes.
-- Do not instantiate classes annotated with `@禁止创建对象` by any syntax form.
+- Do not instantiate classes annotated with `@禁止创建对象` by any syntax form; treat this as a blocking hard requirement.
 - Treat `变量 名称 : 类型?` as declaration-only (no auto-creation).
 - Do not use language keywords as identifiers.
 - Use array type syntax with one or more `[]` suffixes (`类型[]`, `类型[][]`, `类型[][][]`).
