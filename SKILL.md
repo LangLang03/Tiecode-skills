@@ -42,6 +42,43 @@ Use this section as a strict generation lens: prioritize grammar correctness, ca
   - UI mutation should happen on main thread callbacks.
   - Always provide explicit failure path for async request logic.
 
+### Java `#` Macro Rules (Hard Requirement)
+
+- Before generating any `code` / `@code...@end`, must inspect **all** lines containing `#` in basic-library corpus `绳包/安卓基本库/源代码/**/*.t` (read-only evidence pass).
+- If this evidence pass is skipped, Java-block generation is blocked.
+- Only use proven macro forms from corpus evidence:
+  - Value/identifier reference: `#参数名` / `#变量名` / `#对象`
+  - Current wrapped object: `#this`
+  - Class literal: `#类型.class`
+  - Type/member bridge: `#<类型>`, `#<@注解类型>`, `#<类型.成员>`, `#<对象.方法>`
+- Keep macro token strict:
+  - No whitespace between `#` and token.
+  - No invented or guessed macro grammar.
+  - If uncertain, search evidence first, then emit.
+- `#` macros are for Java-embedded context only (`code` or `@code...@end`); do not generate standalone `#` expressions in non-Java statement context.
+
+Typical usage patterns:
+
+```t
+@code
+// 1) 当前包装对象
+return #this.getView();
+
+// 2) 绑定结绳参数/变量
+view.setTag(#标记值);
+
+// 3) 类型桥接与构造签名
+public #<窗口组件>(#<@安卓环境> context) { ... }
+
+// 4) 类字面量
+Class<?> clazz = #目标类型.class;
+
+// 5) 调用桥接成员
+int px = #<像素操作.DP到PX>(#边距);
+#<布局.布局被加载>();
+@end
+```
+
 ### Minimal Syntax Examples (Abstract)
 
 Comparison:
@@ -108,6 +145,10 @@ Non-instantiable class usage:
 - Rule-Evidence Corpus Redline (Highest Priority for policy expansion):
   - When expanding SKILL rules/conventions/requirements, use `绳包/安卓基本库/源代码/**/*.t` as primary evidence source.
   - Evidence lookup is read-only; never write into the above reference corpus.
+- Java-`#` Macro Evidence Redline (Top Priority / Blocking):
+  - Before writing any Java block (`code` / `@code...@end`), perform a full evidence scan of `绳包/安卓基本库/源代码/**/*.t` lines that contain `#`.
+  - Only emit `#` forms already evidenced by the corpus (for example `#this`, `#参数名`, `#类型.class`, `#<类型>`, `#<@注解类型>`, `#<类型.成员>`).
+  - Do not invent undocumented `#` syntaxes; violation is blocking and must be fixed before continuing.
 - Object-Creation Ban Redline (Hard Requirement / Blocking):
   - For any class annotated with `@禁止创建对象`, instance construction is strictly forbidden.
   - Forbidden forms include both auto-creation declaration `变量 名称 : 类型` and explicit creation `变量 名称 : 类型 = 创建 类型()`.
@@ -279,6 +320,7 @@ Always load these before writing test pages or production code (paths are relati
 - `references/indexes/t_lang_structured_members.json`
 - When querying index records/counts, use `scrpits/index_json_ops.py` as first choice.
 - Project source structure and peer code under `源代码/**/*.t` (read nearby same-domain files first).
+- Hard requirement for Java macro generation: read and verify **all** `#` lines under `绳包/安卓基本库/源代码/**/*.t` before emitting any `code` / `@code...@end`.
 - 必读 `绳包/安卓基本库/源代码/安卓_可视化组件.t` 用于组件能力确认（只读检索）。
 - Use files under `绳包/**/源代码/*.t` only for lookup/verification (for example `绳包/安卓基本库/源代码/安卓_可视化组件.t`), not as write targets.
 - For SKILL policy expansion tasks, additionally sample and compare patterns from:
@@ -353,7 +395,7 @@ After the mandatory set is loaded, load request-specific references:
 - Keep parameter typing explicit; default values at the tail.
 - Use `@运算符重载` for operator methods.
 - Keep `@code` and `@end` paired.
-- Use `#参数名` / `#this` macros in Java-embedded code.
+- Use only evidenced Java `#` macro forms in Java-embedded code (`#参数名` / `#this` / `#类型.class` / `#<...>`); do not invent new forms.
 - Read and write all files in UTF-8 without BOM.
 - Use `==` / `!=` (not `=`) in condition comparisons.
 - In guarded else branches, never generate `否则 条件 则`; correct form is `否则 条件`.
