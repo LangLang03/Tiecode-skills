@@ -1,56 +1,47 @@
-# 外部 Java 组件封装（对比总结）
+# 外部 Java 组件封装规范（通用版）
 
-## 1. 对比来源
-- AI 生成文件：`C:\Users\Administrator\Documents\Tiecode-AndroidLib-master\测试\源代码\初始代码.t`
-- 手工修复文件：`C:\Users\Administrator\Music\源代码\初始代码.t`
-- 对照结论：`TimeTextView.java` 两侧内容一致；差异集中在 `.t` 封装代码。
+## 1. 适用范围
+- 适用于使用 `@外部Java文件` + `@导入Java` 封装 Android 视图组件的场景。
+- 本文档为通用规则，不依赖任何固定本地路径或特定示例文件。
 
-## 2. 差异摘要（核心问题）
-- `onCreateView` 返回类型：
-  - 错误：`public rn_1.TimeTextView onCreateView(...)`
-  - 修复：`public TimeTextView onCreateView(...)`
-- `onCreateView` 局部变量与创建：
-  - 错误：`rn_1.TimeTextView view = new rn_1.TimeTextView(context);`
-  - 修复：`TimeTextView view = new TimeTextView(context);`
-- `getView` 返回与强转：
-  - 错误：`public rn_1.TimeTextView getView() { return (rn_1.TimeTextView) view; }`
-  - 修复：`public TimeTextView getView() { return (TimeTextView) view; }`
+## 2. 常见问题模式
+- 在 `@导入Java("包名.类型名")` 后，`@code` 内仍混用 `包名.类型名` 与 `类型名`。
+- `onCreateView` 返回类型、局部变量类型、`getView` 强转类型不一致。
+- `getView()` 返回类型与实际 `view` 对象类型不匹配。
 
-结论：`@导入Java("rn_1.TimeTextView")` 已完成类型导入后，封装组件的 `@code` 里应统一使用简单类型名 `TimeTextView`，不要在签名/变量/强转里继续写 `rn_1.` 前缀。
+## 3. 强制规则
+- `@导入Java` 使用全限定名声明导入：`@导入Java("包名.类型名")`。
+- 导入后，在 `@code` 中统一使用简单类型名 `类型名`（返回类型、局部变量、强转保持一致）。
+- `onCreateView` 与 `getView` 必须使用同一个目标类型。
+- 如果出现同名类型冲突，先消除冲突再生成代码，不允许在同一封装段混写两种类型形态。
 
-## 3. 封装规则（强制）
-- `@导入Java` 负责声明全限定名（`包名.类型名`）。
-- 在 `@code` 中，`onCreateView/getView` 的返回类型、局部变量、强转统一用简单类型名（`类型名`）。
-- `onCreateView` 与 `getView` 必须保持同一类型，不得一处简单名、一处全限定名混写。
-- 若出现同名类型冲突，优先精简导入并保持目标类型唯一；不要在同一封装段里混搭两种类型写法。
-
-## 4. 推荐模板
+## 4. 通用模板
 ```t
-@外部Java文件("./TimeTextView.java")
-@导入Java("rn_1.TimeTextView")
-类 时间显示框 : 文本框
+@外部Java文件("./CustomView.java")
+@导入Java("demo.widget.CustomView")
+类 自定义组件 : 文本框
 	@code
-	public #<时间显示框>(android.content.Context context) {
+	public #<自定义组件>(android.content.Context context) {
 		super(context);
 	}
 
 	@Override
-	public TimeTextView onCreateView(android.content.Context context) {
-		TimeTextView view = new TimeTextView(context);
+	public CustomView onCreateView(android.content.Context context) {
+		CustomView view = new CustomView(context);
 		return view;
 	}
 
 	@Override
-	public TimeTextView getView() {
-		return (TimeTextView) view;
+	public CustomView getView() {
+		return (CustomView) view;
 	}
 	@end
 结束 类
 ```
 
-## 5. 快速审查点
-- 是否同时存在 `@外部Java文件` 与 `@导入Java("包名.类型名")`。
-- 是否在 `@code` 的 `onCreateView/getView` 中统一使用简单类型名。
-- 是否出现 `包名.类型名` 与 `类型名` 混写。
-- `getView` 强转类型是否与 `onCreateView` 返回类型一致。
-- 外部 Java 文件的包名与 `@导入Java` 全限定名是否一致。
+## 5. 审查清单
+- 是否同时声明 `@外部Java文件` 与 `@导入Java("包名.类型名")`。
+- `onCreateView` 返回类型是否与创建实例类型一致。
+- `getView` 返回与强转类型是否与 `onCreateView` 一致。
+- `@code` 内是否仅使用简单类型名，而不是混入 `包名.类型名`。
+- 外部 Java 文件中的 `package` 是否与 `@导入Java` 全限定名一致。
