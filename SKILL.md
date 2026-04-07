@@ -65,6 +65,11 @@ Prefer grammar and template correctness over broad API enumeration.
 - Zero Rule +24: annotation explanation output is mandatory. For every emitted key annotation, explain target, purpose, and critical parameters. Annotations not attached to valid targets and not consumed by compile stage are treated as ineffective and may be cleared during compilation.
 - Zero Rule +25: global-class annotations must not be abused. Use `@全局类` / `@全局基础类` only when cross-module global entry is explicitly required by the task or existing design.
 - Zero Rule +26: for `@附加可变清单` placeholder completion, define a separate dedicated class containing exactly one empty parameter-carrier method. This method must be used only for compile-time template parameter mapping (for example `方法 XXX(输入法类名:文本,输入法名称:文本,输入法配置:文本) ...` with no runtime logic).
+- Zero Rule +27（Top Priority）: for classes annotated `@禁止创建对象`, inspect the class definition first and confirm usable members. Treat these classes as non-instantiable utility/meta classes.
+- Zero Rule +28（Top Priority）: for `@禁止创建对象` classes, forbid all instance construction forms, including auto-creation declaration (`变量 名称 : 类型`) and explicit creation (`变量 名称 : 类型 = 创建 类型()`).
+- Zero Rule +29（Top Priority）: `变量 名称 : 类型?` is declaration-only (no auto-creation). Use it for deferred assignment or nullable references when object creation must not happen.
+- Zero Rule +30（Top Priority）: do not use language keywords as identifiers (class names, method names, variable names, parameter names, constant names, event names, etc.).
+- Zero Rule +31（Top Priority）: array types use suffix brackets and support multi-dimension: `类型[]`, `类型[][]`, `类型[][][]` ...
 - Do not generate `包名 ...` by default.
 - Main window must be `类 启动窗口 : 窗口`.
 - Page classes must inherit `窗口` (do not use `组件容器` as page base class).
@@ -173,7 +178,11 @@ Always load these before writing test pages or production code (paths are relati
 - In conditions, use `==` / `!=` for comparison and reserve `=` for assignment/default values only.
 - For layout color keys (for example `背景颜色`), use signed decimal integer literals only; do not use `0x...`/`0X...`.
 - In layout declaration blocks, keep `@布局配置` definitions contiguous with no blank lines between adjacent definition pairs.
-- For object instance declaration, use auto-creation form `变量 名称 : 类型`; forbid `= 创建 类型()` generation.
+- For normal object instance declaration, use auto-creation form `变量 名称 : 类型`; forbid `= 创建 类型()` generation.
+- For classes with `@禁止创建对象`, forbid auto-creation declaration (`变量 名称 : 类型`) and explicit creation; use class-level static calls or declaration-only reference `变量 名称 : 类型?`.
+- Treat `变量 名称 : 类型?` as declaration-only (no auto-creation); assign later when needed.
+- Do not use language keywords as any identifier.
+- For arrays, use suffix bracket form `类型[]` and support multi-dimension `类型[][][]`.
 - In multi-branch conditions, use `否则 条件` syntax; do not emit `否则如果`.
 - In multi-branch guarded else branch, do not append `则` after `否则 条件`.
 - Use `循环(条件)` for conditional loops.
@@ -231,6 +240,10 @@ After the mandatory set is loaded, load request-specific references:
 - Do not invent unseen annotation names unless explicitly requested.
 - Do not generate nested/inner class declarations.
 - Do not assume `@导入Java` scope is shared between classes.
+- Do not instantiate classes annotated with `@禁止创建对象` by any syntax form.
+- Treat `变量 名称 : 类型?` as declaration-only (no auto-creation).
+- Do not use language keywords as identifiers.
+- Use array type syntax with one or more `[]` suffixes (`类型[]`, `类型[][]`, `类型[][][]`).
 
 ## Built-In Navigation (Migrated From README)
 
