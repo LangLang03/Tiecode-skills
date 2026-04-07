@@ -16,6 +16,7 @@ description: Write, refactor, review, and repair Tiecode `.t` 缁撶怀浠ｇ爜
   - Method/member calls must resolve to real callable targets, with matching receiver and signature context.
 - Any uncertainty must be verified first; if verification cannot be completed successfully, explicitly inform the user and immediately terminate the current generation/review flow.
 - All document viewing and editing must use UTF-8 without BOM.
+- Layout numeric values in `@布局配置` support both `px` and `dp`: default to `px` when unit is omitted, and prefer `dp` unless there is an explicit reason to use `px`.
 - This rule has the highest priority, above speed and convenience, and must never be skipped in any round.
 
 ## Objective
