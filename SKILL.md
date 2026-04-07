@@ -51,6 +51,7 @@ Prefer grammar and template correctness over broad API enumeration.
 - Zero Rule +4: methods annotated as layout properties (for example `@布局属性` methods such as `位于某组件之下`) are also valid layout keys in `@布局配置`; verify annotation and callable signature from source/index before use.
 - Zero Rule +5: `@布局属性` method signatures are fixed to two parameters only: `(欲设置组件 : 可视化组件, 参数值 : 类型)`; do not generate extra parameters.
 - Zero Rule +6: when using a layout-property method in `@布局配置`, the key must be prefixed with `@` (for example `@位于某组件之下=1`).
+- Zero Rule +6.1: `@位于某组件之下` / `@位于某组件之上` describe 2D planar relative position (higher/lower placement). They do not change view hierarchy, parent-child relation, or z-order/layer.
 - Zero Rule +7: for multi-component layout declaration blocks, keep exactly one blank line after class declaration before the first layout pair, then keep declarations contiguous: no blank line between each `@布局配置` + `变量` pair. After the layout block ends, trailing blank lines are not constrained by this rule.
 - Zero Rule +8: layout values are not numeric-only. `@布局配置` supports typed values (number/text/bool/etc.) as long as type matches the target property or `@布局属性` method second parameter. Example keys: `内容="猜硬币游戏"`, `字体大小=24`, `@位于布局中间=真`.
 - Zero Rule +9（第0标识）: inheritance-chain analysis is mandatory for all classes and objects (not only `窗口` classes). Before emitting member calls/parameter passing, determine current type, parent chain, and whether upcast is valid.
@@ -77,6 +78,7 @@ Prefer grammar and template correctness over broad API enumeration.
 - Zero Rule +30（Top Priority）: do not use language keywords as identifiers (class names, method names, variable names, parameter names, constant names, event names, etc.).
 - Zero Rule +31（Top Priority）: array types use suffix brackets and support multi-dimension: `类型[]`, `类型[][]`, `类型[][][]` ... Arrays can be initialized with braces, for example `变量 数组 : 整数[] = {1,2,3}`.
 - Zero Rule +32（Top Priority）: direct conversion from `小数` to `单精小数` is not supported. Only when conversion is strictly necessary, use `到文本().到单精小数()` (or project-defined equivalent method name) or use an `@code` block.
+- Zero Rule +33（Top Priority）: use keyword `跳出循环` to exit loop blocks in 结绳 layer. Do not generate Java `break` outside `@code`.
 - Do not generate `包名 ...` by default.
 - Main window must be `类 启动窗口 : 窗口`.
 - Page classes must inherit `窗口` (do not use `组件容器` as page base class).
@@ -179,6 +181,7 @@ Always load these before writing test pages or production code (paths are relati
 - Verify property read/write support in the above files before emitting property access or non-built-in layout keys.
 - For every layout key, verify it maps to either a property accessor (`属性读/属性写`) or a `@布局属性` method; built-in structural keys `父布局/根布局` are exempt from this lookup.
 - For every `@布局属性` method used as layout key, verify two-parameter signature and `@key=value` usage form.
+- For relative-position layout keys such as `@位于某组件之下` / `@位于某组件之上`, treat them as planar positioning only (up/down in 2D). Do not infer hierarchy/z-order changes.
 - For every layout key-value pair, verify value type compatibility (for example `内容` uses text, `字体大小` uses number, `@位于布局中间` uses bool).
 - Inheritance-chain analysis is mandatory before generation: resolve current class/object parent chain first, then decide member access and parameter passing.
 - In classes inheriting `窗口`, treat `本对象` as `安卓环境` directly and forbid `本对象.取安卓环境()` generation.
@@ -191,6 +194,7 @@ Always load these before writing test pages or production code (paths are relati
 - Do not use language keywords as any identifier.
 - For arrays, use suffix bracket form `类型[]` and support multi-dimension `类型[][][]`. Brace initialization is allowed: `变量 名称 : 类型[] = {值1,值2,值3}`.
 - For `小数 -> 单精小数`, do not generate direct conversion. Only generate conversion when strictly required, via `到文本().到单精小数()` (or project-defined equivalent) or an `@code` block.
+- For loop early-exit in 结绳 layer, use `跳出循环` only. `break` is Java-only and may appear only inside `@code`.
 - In multi-branch conditions, use `否则 条件` syntax; do not emit `否则如果`.
 - In multi-branch guarded else branch, do not append `则` after `否则 条件`.
 - Use `循环(条件)` for conditional loops.
@@ -255,6 +259,7 @@ After the mandatory set is loaded, load request-specific references:
 - Do not use language keywords as identifiers.
 - Use array type syntax with one or more `[]` suffixes (`类型[]`, `类型[][]`, `类型[][][]`). Array literals may use brace initialization (`变量 名称 : 类型[] = {值1,值2,值3}`).
 - Treat `小数 -> 单精小数` as non-direct-convertible in 结绳 layer; when unavoidable, convert via `到文本().到单精小数()` or use `@code`.
+- Use `跳出循环` keyword for loop exits in 结绳 statements; do not emit `break` unless inside `@code`.
 
 ## Built-In Navigation (Migrated From README)
 
