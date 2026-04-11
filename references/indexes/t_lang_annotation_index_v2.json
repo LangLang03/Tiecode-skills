@@ -1,501 +1,501 @@
 ﻿{
-    "generated_at":  "2026-04-06T19:12:08+08:00",
-    "annotation_count":  55,
-    "annotations":  [
-                        {
-                            "name":  "@code",
-                            "count":  977,
-                            "first_ref":  {
-                                              "path":  "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/AndroidX/AndroidX_布局.t",
-                                              "line":  19,
-                                              "snippet":  "@code"
-                                          }
-                        },
-                        {
-                            "name":  "@end",
-                            "count":  977,
-                            "first_ref":  {
-                                              "path":  "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/AndroidX/AndroidX_布局.t",
-                                              "line":  35,
-                                              "snippet":  "@end"
-                                          }
-                        },
-                        {
-                            "name":  "@JavascriptInterface",
-                            "count":  1,
-                            "first_ref":  {
-                                              "path":  "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/安卓_可视化组件.t",
-                                              "line":  2430,
-                                              "snippet":  "@JavascriptInterface"
-                                          }
-                        },
-                        {
-                            "name":  "@Override",
-                            "count":  284,
-                            "first_ref":  {
-                                              "path":  "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/AndroidX/AndroidX_布局.t",
-                                              "line":  25,
-                                              "snippet":  "@Override"
-                                          }
-                        },
-                        {
-                            "name":  "@SuppressLint",
-                            "count":  1,
-                            "first_ref":  {
-                                              "path":  "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/安卓_可视化组件.t",
-                                              "line":  2431,
-                                              "snippet":  "@SuppressLint({\"JavascriptInterface\"})"
-                                          }
-                        },
-                        {
-                            "name":  "@TargetApi",
-                            "count":  1,
-                            "first_ref":  {
-                                              "path":  "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/安卓_可视化组件.t",
-                                              "line":  2681,
-                                              "snippet":  "@TargetApi(Build.VERSION_CODES.LOLLIPOP)"
-                                          }
-                        },
-                        {
-                            "name":  "@安卓资源.XML",
-                            "count":  1,
-                            "first_ref":  {
-                                              "path":  "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/安卓_无障碍.t",
-                                              "line":  4,
-                                              "snippet":  "@安卓资源.XML(\"../extra_xml/accessibility_config.xml\")"
-                                          }
-                        },
-                        {
-                            "name":  "@编译时处理参数",
-                            "count":  6,
-                            "first_ref":  {
-                                              "path":  "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/结绳_用户软件相关.t",
-                                              "line":  10,
-                                              "snippet":  "@编译时处理参数"
-                                          }
-                        },
-                        {
-                            "name":  "@布局属性",
-                            "count":  57,
-                            "first_ref":  {
-                                              "path":  "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/AndroidX/AndroidX_布局.t",
-                                              "line":  37,
-                                              "snippet":  "@布局属性"
-                                          }
-                        },
-                        {
-                            "name":  "@常量类型",
-                            "count":  23,
-                            "first_ref":  {
-                                              "path":  "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/AndroidX/AndroidX_布局.t",
-                                              "line":  3,
-                                              "snippet":  "@常量类型(整数)"
-                                          }
-                        },
-                        {
-                            "name":  "@导入Java",
-                            "count":  448,
-                            "first_ref":  {
-                                              "path":  "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/AndroidX/AndroidX_布局.t",
-                                              "line":  5,
-                                              "snippet":  "@导入Java(\"androidx.constraintlayout.widget.ConstraintLayout\")"
-                                          }
-                        },
-                        {
-                            "name":  "@调试",
-                            "count":  3,
-                            "first_ref":  {
-                                              "path":  "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/结绳_工具类.t",
-                                              "line":  1221,
-                                              "snippet":  "@调试"
-                                          }
-                        },
-                        {
-                            "name":  "@废弃使用",
-                            "count":  45,
-                            "first_ref":  {
-                                              "path":  "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/AndroidX/高级列表框.t",
-                                              "line":  458,
-                                              "snippet":  "@废弃使用(\"取项目总数() 已更名为 取项目数量()\")"
-                                          }
-                        },
-                        {
-                            "name":  "@附加清单",
-                            "count":  2,
-                            "first_ref":  {
-                                              "path":  "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/安卓_画板.t",
-                                              "line":  70,
-                                              "snippet":  "@附加清单(常用清单属性.申请更大内存)"
-                                          }
-                        },
-                        {
-                            "name":  "@附加清单.全局属性",
-                            "count":  4,
-                            "first_ref":  {
-                                              "path":  "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/结绳_用户软件相关.t",
-                                              "line":  54,
-                                              "snippet":  "@附加清单.全局属性(常用清单属性.允许更改窗口大小)"
-                                          }
-                        },
-                        {
-                            "name":  "@附加清单.组件属性",
-                            "count":  1,
-                            "first_ref":  {
-                                              "path":  "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/安卓_可视化组件.t",
-                                              "line":  2067,
-                                              "snippet":  "@附加清单.组件属性([[android:configChanges=\"orientation|screenSize|keyboardHidden|uiMode\"]])"
-                                          }
-                        },
-                        {
-                            "name":  "@附加权限",
-                            "count":  56,
-                            "first_ref":  {
-                                              "path":  "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/安卓_传感器类.t",
-                                              "line":  381,
-                                              "snippet":  "@附加权限(安卓权限.网络权限)"
-                                          }
-                        },
-                        {
-                            "name":  "@后缀代码",
-                            "count":  14,
-                            "first_ref":  {
-                                              "path":  "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/AndroidX/高级列表框.t",
-                                              "line":  369,
-                                              "snippet":  "@后缀代码(\"extends androidx.recyclerview.widget.RecyclerView.Adapter\")"
-                                          }
-                        },
-                        {
-                            "name":  "@禁止创建对象",
-                            "count":  107,
-                            "first_ref":  {
-                                              "path":  "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/AndroidX/AndroidX_常用常量定义.t",
-                                              "line":  3,
-                                              "snippet":  "@禁止创建对象"
-                                          }
-                        },
-                        {
-                            "name":  "@禁止继承",
-                            "count":  17,
-                            "first_ref":  {
-                                              "path":  "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/AndroidX/AndroidX_常用常量定义.t",
-                                              "line":  4,
-                                              "snippet":  "@禁止继承"
-                                          }
-                        },
-                        {
-                            "name":  "@静态",
-                            "count":  1086,
-                            "first_ref":  {
-                                              "path":  "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/AndroidX/AndroidX_布局.t",
-                                              "line":  7,
-                                              "snippet":  "@静态"
-                                          }
-                        },
-                        {
-                            "name":  "@匹配文件",
-                            "count":  4,
-                            "first_ref":  {
-                                              "path":  "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/安卓_资源.t",
-                                              "line":  9,
-                                              "snippet":  "@匹配文件(\".*.(xml|png|jpg|jpeg|JPG|JPEG)\")"
-                                          }
-                        },
-                        {
-                            "name":  "@前缀代码",
-                            "count":  7,
-                            "first_ref":  {
-                                              "path":  "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/安卓_布局组件.t",
-                                              "line":  5,
-                                              "snippet":  "@前缀代码(\"abstract\")"
-                                          }
-                        },
-                        {
-                            "name":  "@嵌入式代码",
-                            "count":  71,
-                            "first_ref":  {
-                                              "path":  "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/AndroidX/高级列表框.t",
-                                              "line":  396,
-                                              "snippet":  "@嵌入式代码"
-                                          }
-                        },
-                        {
-                            "name":  "@全局基础类",
-                            "count":  1,
-                            "first_ref":  {
-                                              "path":  "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/JVM_基础类型.t",
-                                              "line":  7,
-                                              "snippet":  "@全局基础类"
-                                          }
-                        },
-                        {
-                            "name":  "@全局类",
-                            "count":  36,
-                            "first_ref":  {
-                                              "path":  "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/AndroidX/高级列表框.t",
-                                              "line":  370,
-                                              "snippet":  "@全局类"
-                                          }
-                        },
-                        {
-                            "name":  "@软件配置.版本号",
-                            "count":  1,
-                            "first_ref":  {
-                                              "path":  "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/结绳_用户软件相关.t",
-                                              "line":  25,
-                                              "snippet":  "@软件配置.版本号(版本号)"
-                                          }
-                        },
-                        {
-                            "name":  "@软件配置.版本名称",
-                            "count":  1,
-                            "first_ref":  {
-                                              "path":  "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/结绳_用户软件相关.t",
-                                              "line":  32,
-                                              "snippet":  "@软件配置.版本名称(名称)"
-                                          }
-                        },
-                        {
-                            "name":  "@软件配置.目标安卓版本",
-                            "count":  1,
-                            "first_ref":  {
-                                              "path":  "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/结绳_用户软件相关.t",
-                                              "line":  46,
-                                              "snippet":  "@软件配置.目标安卓版本(版本)"
-                                          }
-                        },
-                        {
-                            "name":  "@软件配置.软件名称",
-                            "count":  1,
-                            "first_ref":  {
-                                              "path":  "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/结绳_用户软件相关.t",
-                                              "line":  11,
-                                              "snippet":  "@软件配置.软件名称(名称)"
-                                          }
-                        },
-                        {
-                            "name":  "@软件配置.软件图标",
-                            "count":  1,
-                            "first_ref":  {
-                                              "path":  "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/结绳_用户软件相关.t",
-                                              "line":  18,
-                                              "snippet":  "@软件配置.软件图标(路径)"
-                                          }
-                        },
-                        {
-                            "name":  "@软件配置.最低安卓版本",
-                            "count":  1,
-                            "first_ref":  {
-                                              "path":  "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/结绳_用户软件相关.t",
-                                              "line":  39,
-                                              "snippet":  "@软件配置.最低安卓版本(版本)"
-                                          }
-                        },
-                        {
-                            "name":  "@输出名",
-                            "count":  3,
-                            "first_ref":  {
-                                              "path":  "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/AndroidX/AndroidX_窗口.t",
-                                              "line":  186,
-                                              "snippet":  "@输出名(\"onBackPressed\")"
-                                          }
-                        },
-                        {
-                            "name":  "@属性需求.固定项目ID",
-                            "count":  1,
-                            "first_ref":  {
-                                              "path":  "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/AndroidX/高级列表框.t",
-                                              "line":  605,
-                                              "snippet":  "@属性需求.固定项目ID(真)"
-                                          }
-                        },
-                        {
-                            "name":  "@属性需求.支持按键监听",
-                            "count":  1,
-                            "first_ref":  {
-                                              "path":  "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/安卓_可视化组件.t",
-                                              "line":  923,
-                                              "snippet":  "@属性需求.支持按键监听(真)"
-                                          }
-                        },
-                        {
-                            "name":  "@属性需求.支持触摸",
-                            "count":  1,
-                            "first_ref":  {
-                                              "path":  "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/安卓_可视化组件.t",
-                                              "line":  896,
-                                              "snippet":  "@属性需求.支持触摸(真)"
-                                          }
-                        },
-                        {
-                            "name":  "@属性需求.支持单击",
-                            "count":  1,
-                            "first_ref":  {
-                                              "path":  "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/安卓_可视化组件.t",
-                                              "line":  884,
-                                              "snippet":  "@属性需求.支持单击(真)"
-                                          }
-                        },
-                        {
-                            "name":  "@属性需求.支持焦点改变监听",
-                            "count":  1,
-                            "first_ref":  {
-                                              "path":  "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/安卓_可视化组件.t",
-                                              "line":  915,
-                                              "snippet":  "@属性需求.支持焦点改变监听(真)"
-                                          }
-                        },
-                        {
-                            "name":  "@属性需求.支持内容改变监听",
-                            "count":  1,
-                            "first_ref":  {
-                                              "path":  "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/安卓_可视化组件.t",
-                                              "line":  1287,
-                                              "snippet":  "@属性需求.支持内容改变监听(真)"
-                                          }
-                        },
-                        {
-                            "name":  "@属性需求.支持拖放",
-                            "count":  1,
-                            "first_ref":  {
-                                              "path":  "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/安卓_可视化组件.t",
-                                              "line":  911,
-                                              "snippet":  "@属性需求.支持拖放(真)"
-                                          }
-                        },
-                        {
-                            "name":  "@属性需求.支持项目单击",
-                            "count":  1,
-                            "first_ref":  {
-                                              "path":  "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/AndroidX/高级列表框.t",
-                                              "line":  598,
-                                              "snippet":  "@属性需求.支持项目单击(真)"
-                                          }
-                        },
-                        {
-                            "name":  "@属性需求.支持项目长按",
-                            "count":  1,
-                            "first_ref":  {
-                                              "path":  "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/AndroidX/高级列表框.t",
-                                              "line":  601,
-                                              "snippet":  "@属性需求.支持项目长按(真)"
-                                          }
-                        },
-                        {
-                            "name":  "@属性需求.支持长按",
-                            "count":  1,
-                            "first_ref":  {
-                                              "path":  "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/安卓_可视化组件.t",
-                                              "line":  888,
-                                              "snippet":  "@属性需求.支持长按(真)"
-                                          }
-                        },
-                        {
-                            "name":  "@外部Java文件",
-                            "count":  16,
-                            "first_ref":  {
-                                              "path":  "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/AndroidX/高级列表框_分割装饰线.t",
-                                              "line":  23,
-                                              "snippet":  "@外部Java文件(\"../../extra_java/RecyclerView/ItemDecoration/SpacesItemDecoration.java\")"
-                                          }
-                        },
-                        {
-                            "name":  "@外部依赖库",
-                            "count":  33,
-                            "first_ref":  {
-                                              "path":  "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/AndroidX/AndroidX_布局.t",
-                                              "line":  15,
-                                              "snippet":  "@外部依赖库(\"../../依赖库/androidx/constraintlayout-2.1.4.aar\")"
-                                          }
-                        },
-                        {
-                            "name":  "@虚拟方法",
-                            "count":  15,
-                            "first_ref":  {
-                                              "path":  "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/AndroidX/AndroidX_窗口.t",
-                                              "line":  187,
-                                              "snippet":  "@虚拟方法"
-                                          }
-                        },
-                        {
-                            "name":  "@虚拟事件",
-                            "count":  40,
-                            "first_ref":  {
-                                              "path":  "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/AndroidX/AndroidX_窗口.t",
-                                              "line":  116,
-                                              "snippet":  "@虚拟事件"
-                                          }
-                        },
-                        {
-                            "name":  "@需求值类型",
-                            "count":  23,
-                            "first_ref":  {
-                                              "path":  "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/AndroidX/AndroidX_布局.t",
-                                              "line":  4,
-                                              "snippet":  "@需求值类型(整数)"
-                                          }
-                        },
-                        {
-                            "name":  "@异步方法",
-                            "count":  17,
-                            "first_ref":  {
-                                              "path":  "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/安卓_可视化组件.t",
-                                              "line":  1695,
-                                              "snippet":  "@异步方法"
-                                          }
-                        },
-                        {
-                            "name":  "@隐藏",
-                            "count":  42,
-                            "first_ref":  {
-                                              "path":  "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/AndroidX/高级列表框.t",
-                                              "line":  22,
-                                              "snippet":  "@隐藏"
-                                          }
-                        },
-                        {
-                            "name":  "@运算符重载",
-                            "count":  146,
-                            "first_ref":  {
-                                              "path":  "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/AndroidX/高级列表框.t",
-                                              "line":  397,
-                                              "snippet":  "@运算符重载"
-                                          }
-                        },
-                        {
-                            "name":  "@值输出规则",
-                            "count":  6,
-                            "first_ref":  {
-                                              "path":  "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/安卓_资源.t",
-                                              "line":  10,
-                                              "snippet":  "@值输出规则(\"@drawable\")"
-                                          }
-                        },
-                        {
-                            "name":  "@指代类",
-                            "count":  158,
-                            "first_ref":  {
-                                              "path":  "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/AndroidX/AndroidX_窗口.t",
-                                              "line":  22,
-                                              "snippet":  "@指代类(\"androidx.appcompat.app.AppCompatActivity\")"
-                                          }
-                        },
-                        {
-                            "name":  "@自动订阅事件",
-                            "count":  2,
-                            "first_ref":  {
-                                              "path":  "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/安卓_可视化组件.t",
-                                              "line":  46,
-                                              "snippet":  "@自动订阅事件"
-                                          }
-                        },
-                        {
-                            "name":  "@作者",
-                            "count":  1,
-                            "first_ref":  {
-                                              "path":  "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/结绳_用户软件相关.t",
-                                              "line":  5,
-                                              "snippet":  "@作者 结绳开发团队"
-                                          }
-                        }
-                    ]
+    "generated_at": "2026-04-06T19:12:08+08:00",
+    "annotation_count": 55,
+    "annotations": [
+        {
+            "name": "@code",
+            "count": 977,
+            "first_ref": {
+                "path": "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/AndroidX/AndroidX_布局.t",
+                "line": 19,
+                "snippet": "@code"
+            }
+        },
+        {
+            "name": "@end",
+            "count": 977,
+            "first_ref": {
+                "path": "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/AndroidX/AndroidX_布局.t",
+                "line": 35,
+                "snippet": "@end"
+            }
+        },
+        {
+            "name": "@JavascriptInterface",
+            "count": 1,
+            "first_ref": {
+                "path": "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/安卓_可视化组件.t",
+                "line": 2430,
+                "snippet": "@JavascriptInterface"
+            }
+        },
+        {
+            "name": "@Override",
+            "count": 284,
+            "first_ref": {
+                "path": "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/AndroidX/AndroidX_布局.t",
+                "line": 25,
+                "snippet": "@Override"
+            }
+        },
+        {
+            "name": "@SuppressLint",
+            "count": 1,
+            "first_ref": {
+                "path": "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/安卓_可视化组件.t",
+                "line": 2431,
+                "snippet": "@SuppressLint({\"JavascriptInterface\"})"
+            }
+        },
+        {
+            "name": "@TargetApi",
+            "count": 1,
+            "first_ref": {
+                "path": "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/安卓_可视化组件.t",
+                "line": 2681,
+                "snippet": "@TargetApi(Build.VERSION_CODES.LOLLIPOP)"
+            }
+        },
+        {
+            "name": "@安卓资源.XML",
+            "count": 1,
+            "first_ref": {
+                "path": "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/安卓_无障碍.t",
+                "line": 4,
+                "snippet": "@安卓资源.XML(\"../extra_xml/accessibility_config.xml\")"
+            }
+        },
+        {
+            "name": "@编译时处理参数",
+            "count": 6,
+            "first_ref": {
+                "path": "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/结绳_用户软件相关.t",
+                "line": 10,
+                "snippet": "@编译时处理参数"
+            }
+        },
+        {
+            "name": "@布局属性",
+            "count": 57,
+            "first_ref": {
+                "path": "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/AndroidX/AndroidX_布局.t",
+                "line": 37,
+                "snippet": "@布局属性"
+            }
+        },
+        {
+            "name": "@常量类型",
+            "count": 23,
+            "first_ref": {
+                "path": "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/AndroidX/AndroidX_布局.t",
+                "line": 3,
+                "snippet": "@常量类型(整数)"
+            }
+        },
+        {
+            "name": "@导入Java",
+            "count": 448,
+            "first_ref": {
+                "path": "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/AndroidX/AndroidX_布局.t",
+                "line": 5,
+                "snippet": "@导入Java(\"androidx.constraintlayout.widget.ConstraintLayout\")"
+            }
+        },
+        {
+            "name": "@调试",
+            "count": 3,
+            "first_ref": {
+                "path": "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/结绳_工具类.t",
+                "line": 1221,
+                "snippet": "@调试"
+            }
+        },
+        {
+            "name": "@废弃使用",
+            "count": 45,
+            "first_ref": {
+                "path": "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/AndroidX/高级列表框.t",
+                "line": 458,
+                "snippet": "@废弃使用(\"取项目总数() 已更名为 取项目数量()\")"
+            }
+        },
+        {
+            "name": "@附加清单",
+            "count": 2,
+            "first_ref": {
+                "path": "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/安卓_画板.t",
+                "line": 70,
+                "snippet": "@附加清单(常用清单属性.申请更大内存)"
+            }
+        },
+        {
+            "name": "@附加清单.全局属性",
+            "count": 4,
+            "first_ref": {
+                "path": "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/结绳_用户软件相关.t",
+                "line": 54,
+                "snippet": "@附加清单.全局属性(常用清单属性.允许更改窗口大小)"
+            }
+        },
+        {
+            "name": "@附加清单.组件属性",
+            "count": 1,
+            "first_ref": {
+                "path": "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/安卓_可视化组件.t",
+                "line": 2067,
+                "snippet": "@附加清单.组件属性([[android:configChanges=\"orientation|screenSize|keyboardHidden|uiMode\"]])"
+            }
+        },
+        {
+            "name": "@附加权限",
+            "count": 56,
+            "first_ref": {
+                "path": "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/安卓_传感器类.t",
+                "line": 381,
+                "snippet": "@附加权限(安卓权限.网络权限)"
+            }
+        },
+        {
+            "name": "@后缀代码",
+            "count": 14,
+            "first_ref": {
+                "path": "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/AndroidX/高级列表框.t",
+                "line": 369,
+                "snippet": "@后缀代码(\"extends androidx.recyclerview.widget.RecyclerView.Adapter\")"
+            }
+        },
+        {
+            "name": "@禁止创建对象",
+            "count": 107,
+            "first_ref": {
+                "path": "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/AndroidX/AndroidX_常用常量定义.t",
+                "line": 3,
+                "snippet": "@禁止创建对象"
+            }
+        },
+        {
+            "name": "@禁止继承",
+            "count": 17,
+            "first_ref": {
+                "path": "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/AndroidX/AndroidX_常用常量定义.t",
+                "line": 4,
+                "snippet": "@禁止继承"
+            }
+        },
+        {
+            "name": "@静态",
+            "count": 1086,
+            "first_ref": {
+                "path": "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/AndroidX/AndroidX_布局.t",
+                "line": 7,
+                "snippet": "@静态"
+            }
+        },
+        {
+            "name": "@匹配文件",
+            "count": 4,
+            "first_ref": {
+                "path": "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/安卓_资源.t",
+                "line": 9,
+                "snippet": "@匹配文件(\".*.(xml|png|jpg|jpeg|JPG|JPEG)\")"
+            }
+        },
+        {
+            "name": "@前缀代码",
+            "count": 7,
+            "first_ref": {
+                "path": "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/安卓_布局组件.t",
+                "line": 5,
+                "snippet": "@前缀代码(\"abstract\")"
+            }
+        },
+        {
+            "name": "@嵌入式代码",
+            "count": 71,
+            "first_ref": {
+                "path": "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/AndroidX/高级列表框.t",
+                "line": 396,
+                "snippet": "@嵌入式代码"
+            }
+        },
+        {
+            "name": "@全局基础类",
+            "count": 1,
+            "first_ref": {
+                "path": "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/JVM_基础类型.t",
+                "line": 7,
+                "snippet": "@全局基础类"
+            }
+        },
+        {
+            "name": "@全局类",
+            "count": 36,
+            "first_ref": {
+                "path": "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/AndroidX/高级列表框.t",
+                "line": 370,
+                "snippet": "@全局类"
+            }
+        },
+        {
+            "name": "@软件配置.版本号",
+            "count": 1,
+            "first_ref": {
+                "path": "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/结绳_用户软件相关.t",
+                "line": 25,
+                "snippet": "@软件配置.版本号(版本号)"
+            }
+        },
+        {
+            "name": "@软件配置.版本名称",
+            "count": 1,
+            "first_ref": {
+                "path": "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/结绳_用户软件相关.t",
+                "line": 32,
+                "snippet": "@软件配置.版本名称(名称)"
+            }
+        },
+        {
+            "name": "@软件配置.目标安卓版本",
+            "count": 1,
+            "first_ref": {
+                "path": "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/结绳_用户软件相关.t",
+                "line": 46,
+                "snippet": "@软件配置.目标安卓版本(版本)"
+            }
+        },
+        {
+            "name": "@软件配置.软件名称",
+            "count": 1,
+            "first_ref": {
+                "path": "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/结绳_用户软件相关.t",
+                "line": 11,
+                "snippet": "@软件配置.软件名称(名称)"
+            }
+        },
+        {
+            "name": "@软件配置.软件图标",
+            "count": 1,
+            "first_ref": {
+                "path": "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/结绳_用户软件相关.t",
+                "line": 18,
+                "snippet": "@软件配置.软件图标(路径)"
+            }
+        },
+        {
+            "name": "@软件配置.最低安卓版本",
+            "count": 1,
+            "first_ref": {
+                "path": "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/结绳_用户软件相关.t",
+                "line": 39,
+                "snippet": "@软件配置.最低安卓版本(版本)"
+            }
+        },
+        {
+            "name": "@输出名",
+            "count": 3,
+            "first_ref": {
+                "path": "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/AndroidX/AndroidX_窗口.t",
+                "line": 186,
+                "snippet": "@输出名(\"onBackPressed\")"
+            }
+        },
+        {
+            "name": "@属性需求.固定项目ID",
+            "count": 1,
+            "first_ref": {
+                "path": "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/AndroidX/高级列表框.t",
+                "line": 605,
+                "snippet": "@属性需求.固定项目ID(真)"
+            }
+        },
+        {
+            "name": "@属性需求.支持按键监听",
+            "count": 1,
+            "first_ref": {
+                "path": "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/安卓_可视化组件.t",
+                "line": 923,
+                "snippet": "@属性需求.支持按键监听(真)"
+            }
+        },
+        {
+            "name": "@属性需求.支持触摸",
+            "count": 1,
+            "first_ref": {
+                "path": "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/安卓_可视化组件.t",
+                "line": 896,
+                "snippet": "@属性需求.支持触摸(真)"
+            }
+        },
+        {
+            "name": "@属性需求.支持单击",
+            "count": 1,
+            "first_ref": {
+                "path": "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/安卓_可视化组件.t",
+                "line": 884,
+                "snippet": "@属性需求.支持单击(真)"
+            }
+        },
+        {
+            "name": "@属性需求.支持焦点改变监听",
+            "count": 1,
+            "first_ref": {
+                "path": "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/安卓_可视化组件.t",
+                "line": 915,
+                "snippet": "@属性需求.支持焦点改变监听(真)"
+            }
+        },
+        {
+            "name": "@属性需求.支持内容改变监听",
+            "count": 1,
+            "first_ref": {
+                "path": "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/安卓_可视化组件.t",
+                "line": 1287,
+                "snippet": "@属性需求.支持内容改变监听(真)"
+            }
+        },
+        {
+            "name": "@属性需求.支持拖放",
+            "count": 1,
+            "first_ref": {
+                "path": "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/安卓_可视化组件.t",
+                "line": 911,
+                "snippet": "@属性需求.支持拖放(真)"
+            }
+        },
+        {
+            "name": "@属性需求.支持项目单击",
+            "count": 1,
+            "first_ref": {
+                "path": "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/AndroidX/高级列表框.t",
+                "line": 598,
+                "snippet": "@属性需求.支持项目单击(真)"
+            }
+        },
+        {
+            "name": "@属性需求.支持项目长按",
+            "count": 1,
+            "first_ref": {
+                "path": "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/AndroidX/高级列表框.t",
+                "line": 601,
+                "snippet": "@属性需求.支持项目长按(真)"
+            }
+        },
+        {
+            "name": "@属性需求.支持长按",
+            "count": 1,
+            "first_ref": {
+                "path": "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/安卓_可视化组件.t",
+                "line": 888,
+                "snippet": "@属性需求.支持长按(真)"
+            }
+        },
+        {
+            "name": "@外部Java文件",
+            "count": 16,
+            "first_ref": {
+                "path": "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/AndroidX/高级列表框_分割装饰线.t",
+                "line": 23,
+                "snippet": "@外部Java文件(\"../../extra_java/RecyclerView/ItemDecoration/SpacesItemDecoration.java\")"
+            }
+        },
+        {
+            "name": "@外部依赖库",
+            "count": 33,
+            "first_ref": {
+                "path": "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/AndroidX/AndroidX_布局.t",
+                "line": 15,
+                "snippet": "@外部依赖库(\"../../依赖库/androidx/constraintlayout-2.1.4.aar\")"
+            }
+        },
+        {
+            "name": "@虚拟方法",
+            "count": 15,
+            "first_ref": {
+                "path": "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/AndroidX/AndroidX_窗口.t",
+                "line": 187,
+                "snippet": "@虚拟方法"
+            }
+        },
+        {
+            "name": "@虚拟事件",
+            "count": 40,
+            "first_ref": {
+                "path": "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/AndroidX/AndroidX_窗口.t",
+                "line": 116,
+                "snippet": "@虚拟事件"
+            }
+        },
+        {
+            "name": "@需求值类型",
+            "count": 23,
+            "first_ref": {
+                "path": "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/AndroidX/AndroidX_布局.t",
+                "line": 4,
+                "snippet": "@需求值类型(整数)"
+            }
+        },
+        {
+            "name": "@异步方法",
+            "count": 17,
+            "first_ref": {
+                "path": "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/安卓_可视化组件.t",
+                "line": 1695,
+                "snippet": "@异步方法"
+            }
+        },
+        {
+            "name": "@隐藏",
+            "count": 42,
+            "first_ref": {
+                "path": "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/AndroidX/高级列表框.t",
+                "line": 22,
+                "snippet": "@隐藏"
+            }
+        },
+        {
+            "name": "@运算符重载",
+            "count": 146,
+            "first_ref": {
+                "path": "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/AndroidX/高级列表框.t",
+                "line": 397,
+                "snippet": "@运算符重载"
+            }
+        },
+        {
+            "name": "@值输出规则",
+            "count": 6,
+            "first_ref": {
+                "path": "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/安卓_资源.t",
+                "line": 10,
+                "snippet": "@值输出规则(\"@drawable\")"
+            }
+        },
+        {
+            "name": "@指代类",
+            "count": 158,
+            "first_ref": {
+                "path": "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/AndroidX/AndroidX_窗口.t",
+                "line": 22,
+                "snippet": "@指代类(\"androidx.appcompat.app.AppCompatActivity\")"
+            }
+        },
+        {
+            "name": "@自动订阅事件",
+            "count": 2,
+            "first_ref": {
+                "path": "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/安卓_可视化组件.t",
+                "line": 46,
+                "snippet": "@自动订阅事件"
+            }
+        },
+        {
+            "name": "@作者",
+            "count": 1,
+            "first_ref": {
+                "path": "C:/Users/Administrator/Documents/Tiecode-AndroidLib-master/源代码/结绳_用户软件相关.t",
+                "line": 5,
+                "snippet": "@作者 结绳开发团队"
+            }
+        }
+    ]
 }

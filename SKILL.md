@@ -1,12 +1,17 @@
----
+***
+
 name: tiecode-tlang
 description: Write, refactor, review, and repair Tiecode `.t` 结绳代码 with strict syntax-first guidance. Use when tasks mention `.t` files, Tiecode/结绳 language grammar, annotations, OOP wrappers, embedded Java blocks (`code` or `@code/@end`), event-driven component patterns, naming/style normalization, compile-error repair, project conventions (`源代码` and `绳包`), layout annotation patterns, object reference semantics (`本对象` and `父对象`), and annotation-based dependency/resource loading.
----
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 # Tiecode T-Lang
 
 ## Top-Level Hard Review Requirement (Blocking)
 
+- **Built-in API Retrieval Rule (Highest Priority)**:
+  - In IDE, CLI, and other environments with file read/write support, must prioritize checking built-in APIs under `{项目路径}/绳包/安卓基本库` directory to find available classes, methods, properties, etc.
+  - In chat environments (such as mobile, web, App, etc. where file read/write is not supported), can request the user to provide `t_lang_api_index.json` file to obtain built-in API index.
+  - This rule has higher priority than all other rules, ensuring built-in API retrieval and verification is completed before any code generation.
 - No assumptions: during review and code generation, do not approve based on guesses like "probably exists" or "usually works."
 - If there is any error/diagnostic/fix task, check the issue checklists first: `references/error-fix-rules.md` and `references/ai-generation-checklist.md`.
 - Mandatory verification: in every round, verify that referenced layout properties, classes, and methods truly exist and are usable.
@@ -99,6 +104,8 @@ Static vs instance call:
 
 Non-instantiable class usage:
 
+**When to use `@禁止创建对象`**: Only use this annotation when external instantiation must be prevented, such as: utility classes (pure static method collections), singleton patterns, factory classes, etc. Regular business classes generally do not need this annotation.
+
 ```t
 @禁止创建对象
 类 工具类
@@ -161,6 +168,7 @@ Non-instantiable class usage:
 - Full-Read Rule (Strict): before any coding, read the full Mandatory Read Set in this file (covers all active docs/json/schema/indexes). Skipping is not allowed.
 - Formatting Redline (Highest): do not introduce unintended spaces in layout blocks or UI literals. Examples: use `猜正面` (not `猜 正面`), `总次数:0|胜利:0|失败:0` (no auto-added separator spaces unless user asks).
 - Layout Key Redline: use canonical Chinese layout keys only (`高度`, not `height`; `宽度`, not `width`).
+- Zero Rule 0: 结绳 uses Java-style comments (`//` or `/* */`) instead of `'`-prefixed comments.
 - Zero Rule +1: read as many relevant references as possible to improve accuracy, and deduplicate findings to avoid repeated scans.
 - Write and edit business code only under `源代码/`; do not write code in any path under `绳包/`.
 - Zero Rule +2: property semantics are mandatory. `属性读 XXX() : 类型` enables `对象.XXX` read access; `属性写 XXX(值 : 类型)` enables `对象.XXX = 值` write access; same-name `属性读/属性写` pairs are allowed.
@@ -189,13 +197,13 @@ Non-instantiable class usage:
 - Zero Rule +24: annotation explanation output is mandatory. For every emitted key annotation, explain target, purpose, and critical parameters. Annotations not attached to valid targets and not consumed by compile stage are treated as ineffective and may be cleared during compilation.
 - Zero Rule +25: global-class annotations must not be abused. Use `@全局类` / `@全局基础类` only when cross-module global entry is explicitly required by the task or existing design.
 - Zero Rule +26: for `@附加可变清单` placeholder completion, define a separate dedicated class containing exactly one empty parameter-carrier method. This method must be used only for compile-time template parameter mapping (for example `方法 XXX(输入法类名:文本,输入法名称:文本,输入法配置:文本) ...` with no runtime logic).
-- Zero Rule +27（Top Priority / Hard Requirement）: for classes annotated `@禁止创建对象`, inspect the class definition first and confirm usable members. Treat these classes as non-instantiable utility/meta classes.
+- Zero Rule +27（Top Priority / Hard Requirement）: for classes annotated `@禁止创建对象`, inspect the class definition first and confirm usable members. Treat these classes as non-instantiable utility/meta classes. Note: use this pattern only when truly needed (utility classes, singletons, factories); regular business classes generally do not require this annotation.
 - Zero Rule +28（Top Priority / Hard Requirement）: for `@禁止创建对象` classes, forbid all instance construction forms, including auto-creation declaration (`变量 名称 : 类型`) and explicit creation (`变量 名称 : 类型 = 创建 类型()`). Violation is blocking and must be fixed before continuing.
 - Zero Rule +29（Top Priority）: `变量 名称 : 类型?` is declaration-only (no auto-creation). Use it for deferred assignment or nullable references when object creation must not happen.
 - Zero Rule +30（Top Priority）: do not use language keywords as identifiers (class names, method names, variable names, parameter names, constant names, event names, etc.).
 - Zero Rule +31（Top Priority）: array types use suffix brackets and support multi-dimension: `类型[]`, `类型[][]`, `类型[][][]` ... Arrays can be initialized with braces, for example `变量 数组 : 整数[] = {1,2,3}`.
 - Zero Rule +32（Top Priority）: direct conversion from `小数` to `单精小数` is not supported. Only when conversion is strictly necessary, use `到文本().到单精小数()` (or project-defined equivalent method name) or use an `@code` block.
-- Zero Rule +33（Top Priority）: use keyword `跳出循环` to exit loop blocks in 结绳 layer. Do not generate Java `break` outside `@code`.
+- Zero Rule +33（Top Priority）: use keyword `退出循环` to exit loop blocks in 结绳 layer. Do not generate Java `break` outside `@code`.
 - Zero Rule +34（Top Priority）: for external Java component wrappers (`@外部Java文件` + `@导入Java("包名.类型名")`), use simple imported type name in wrapper `@code` signatures/locals/casts (`类型名`), not package-prefixed names.
 - Do not generate `包名 ...` by default.
 - Main window must be `类 启动窗口 : 窗口`.
@@ -246,14 +254,11 @@ Parameter explanation (must follow):
 
 - Common:
   - `command`: required subcommand; one of `list` / `stats` / `search` / `validate`.
-
 - `list`:
   - `--json`: optional; emit JSON output instead of plain text list.
-
 - `stats`:
   - `--indexes`: optional; choose from `annotation api structured manifest manifest_v2`; default is all indexes.
   - `--json`: optional; emit JSON output.
-
 - `search`:
   - `keyword`: required positional argument; plain keyword by default, or regex when `--regex` is enabled.
   - `--indexes`: optional; choose search scope from `annotation api structured manifest manifest_v2`; default is `annotation api structured`.
@@ -263,7 +268,6 @@ Parameter explanation (must follow):
   - `--regex`: optional flag; treat `keyword` as regular expression.
   - `--show-raw`: optional flag; include `raw` field in text output.
   - `--json`: optional; emit JSON output.
-
 - `validate`:
   - `--indexes`: optional; choose validation scope from `annotation api structured manifest manifest_v2`; default is all indexes.
   - `--fail-on-warning`: optional flag; return non-zero exit code when warnings exist.
@@ -317,7 +321,7 @@ Always load these before writing test pages or production code (paths are relati
 - Do not use language keywords as any identifier.
 - For arrays, use suffix bracket form `类型[]` and support multi-dimension `类型[][][]`. Brace initialization is allowed: `变量 名称 : 类型[] = {值1,值2,值3}`.
 - For `小数 -> 单精小数`, do not generate direct conversion. Only generate conversion when strictly required, via `到文本().到单精小数()` (or project-defined equivalent) or an `@code` block.
-- For loop early-exit in 结绳 layer, use `跳出循环` only. `break` is Java-only and may appear only inside `@code`.
+- For loop early-exit in 结绳 layer, use `退出循环` only. `break` is Java-only and may appear only inside `@code`.
 - In multi-branch conditions, use `否则 条件` syntax; do not emit `否则如果`.
 - In multi-branch guarded else branch, do not append `则` after `否则 条件`.
 - Use `循环(条件)` for conditional loops.
@@ -331,6 +335,7 @@ Always load these before writing test pages or production code (paths are relati
 - If Agent is available and not forbidden by user, Agent must participate in all three phases: document scan, project understanding, and generated-code review on every round.
 
 Execution gate:
+
 - Do not start from only 2-3 files.
 - Before code output, print a full "已读取文件清单" that covers every file in this mandatory set.
 - If Agent is available and user has not forbidden Agent, do not bypass mandatory Agent phases.
@@ -382,12 +387,13 @@ After the mandatory set is loaded, load request-specific references:
 - Do not generate nested/inner class declarations.
 - Do not assume `@导入Java` scope is shared between classes.
 - For external Java component wrappers, do not use package-prefixed type names inside wrapper `@code` signatures/locals/casts when the type is already imported by `@导入Java`.
+- When extending a Java class, use `@后缀代码("extends JavaClassName")` instead of `@前缀代码`. `@前缀代码` is only for class modifiers (like `abstract`).
 - Do not instantiate classes annotated with `@禁止创建对象` by any syntax form; treat this as a blocking hard requirement.
 - Treat `变量 名称 : 类型?` as declaration-only (no auto-creation).
 - Do not use language keywords as identifiers.
 - Use array type syntax with one or more `[]` suffixes (`类型[]`, `类型[][]`, `类型[][][]`). Array literals may use brace initialization (`变量 名称 : 类型[] = {值1,值2,值3}`).
 - Treat `小数 -> 单精小数` as non-direct-convertible in 结绳 layer; when unavoidable, convert via `到文本().到单精小数()` or use `@code`.
-- Use `跳出循环` keyword for loop exits in 结绳 statements; do not emit `break` unless inside `@code`.
+- Use `退出循环` keyword for loop exits in 结绳 statements; do not emit `break` unless inside `@code`.
 
 ## Built-In Navigation (Migrated From README)
 
@@ -408,6 +414,10 @@ Core navigation:
 - `references/syntax-feature-matrix.md`: 语法特性矩阵（是否必需、典型坑）
 - `references/evidence-index.md`: 语法证据（源码路径+行号）
 - `references/project-conventions.md`: 项目约定（源代码/绳包、注解引入依赖、布局模式、本对象/父对象）
+- `references/error-handling-debug.md`: 错误处理与调试（异常,日志）
+- `references/design-patterns.md`: 设计模式（单例、工厂、策略等）
+- `references/business-scenarios.md`: 业务场景（登录、注册、支付等）
+- `references/indexes/t_lang_api_index.json`: 机器索引（Java API）
 
 Recommended reading order:
 
@@ -439,3 +449,4 @@ When producing code for users:
 1. Output final `.t` code first.
 2. Briefly list syntax-critical decisions (annotation, return style, block closure).
 3. Mention unresolved assumptions explicitly.
+
