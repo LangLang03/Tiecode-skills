@@ -12,6 +12,11 @@ description: Write, refactor, review, and repair Tiecode `.t` 结绳代码 with 
   - In IDE, CLI, and other environments with file read/write support, must prioritize checking built-in APIs under `{项目路径}/绳包/安卓基本库` directory to find available classes, methods, properties, etc.
   - In chat environments (such as mobile, web, App, etc. where file read/write is not supported), can request the user to provide `t_lang_api_index.json` file to obtain built-in API index.
   - This rule has higher priority than all other rules, ensuring built-in API retrieval and verification is completed before any code generation.
+- **Basic-Library Function Priority Rule (Hard Requirement / Blocking)**:
+  - When handling any functional requirement (for example array-to-text conversion, text processing, numeric conversion, etc.), must first search the basic library for existing functions or methods that can be used directly.
+  - Search scope includes `绳包/安卓基本库/源代码/**/*.t` and utility methods already defined in project `源代码/**/*.t`.
+  - Only implement custom logic when the corresponding functionality does not exist in the basic library; it is strictly forbidden to skip the search and re-implement existing functionality.
+  - This rule applies to all code generation scenarios, including but not limited to data conversion, string processing, collection operations, file operations, etc.
 - No assumptions: during review and code generation, do not approve based on guesses like "probably exists" or "usually works."
 - If there is any error/diagnostic/fix task, check the issue checklists first: `references/error-fix-rules.md` and `references/ai-generation-checklist.md`.
 - Mandatory verification: in every round, verify that referenced layout properties, classes, and methods truly exist and are usable.
